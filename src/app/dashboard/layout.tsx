@@ -26,7 +26,7 @@ const navItems = [
   { href: "/dashboard/coordinacion",         icon: CalendarDays,    label: "Coordinación",            badge: null, roles: ['administrador','supervisor','operaria'] },
   { href: "/dashboard/calculadora-traslado", icon: Calculator,      label: "Calculadora de Traslado", badge: null, roles: ['administrador','supervisor','operaria'] },
   { href: "/dashboard/cotizaciones",         icon: FileSpreadsheet, label: "Cotizaciones",            badge: null, roles: ['administrador'] },
-  { href: "/dashboard/nosotros",             icon: Heart,           label: "Nosotros",                badge: null, roles: ['administrador','supervisor','operaria'] },
+  { href: "/dashboard/nosotros",             icon: Heart,           label: "Paula",                   badge: null, roles: ['administrador','supervisor','operaria'] },
   { href: "/dashboard/settings",             icon: Settings,        label: "Configuración",           badge: null, roles: ['administrador'] },
 ];
 
