@@ -22,21 +22,12 @@ interface UserProfile {
 
 // Menú completo con restricciones por rol
 const navItems = [
-  { href: "/dashboard",              icon: LayoutDashboard, label: "Dashboard",           badge: null,  roles: ['administrador','supervisor','operaria'] },
-  { href: "/dashboard/coordinacion", icon: CalendarDays,    label: "Coordinación",        badge: null,  roles: ['administrador','supervisor','operaria'] },
-  { href: "/dashboard/calculadora-traslado", icon: Calculator, label: "Calculadora de Traslado", badge: null, roles: ['administrador','supervisor','operaria'] },
-  { href: "/dashboard/technicians",  icon: Users,           label: "Técnicos",            badge: null,  roles: ['administrador','supervisor','operaria'] },
-  { href: "/dashboard/reports",      icon: FileText,        label: "Informes Técnicos",   badge: null,  roles: ['administrador','supervisor','operaria'] },
-
-  { href: "/dashboard/orders",       icon: ClipboardList,   label: "Órdenes de Trabajo",  badge: null,  roles: ['administrador','supervisor'] },
-  { href: "/dashboard/map",          icon: MapPin,          label: "Mapa Operacional",    badge: null,  roles: ['administrador','supervisor'] },
-  { href: "/dashboard/inventory",    icon: Package,         label: "Inventario",          badge: null,  roles: ['administrador','supervisor','bodega'] },
-  { href: "/dashboard/cotizaciones",   icon: FileSpreadsheet,   label: "Cotizaciones",           badge: null,  roles: ['administrador'] },
-  { href: "/dashboard/cotizaciones-santander", icon: FileSpreadsheet, label: "Cotizaciones Santander", badge: null, roles: ['administrador'] },
-  { href: "/dashboard/nosotros",       icon: Heart,             label: "Nosotros",               badge: null,  roles: ['administrador','supervisor','operaria'] },
-  { href: "/dashboard/executive",      icon: BarChart3,         label: "Reportes Ejecutivos",    badge: null,  roles: ['administrador'] },
-  { href: "/dashboard/audit",          icon: ScrollText,        label: "Auditoría",              badge: null,  roles: ['administrador'] },
-  { href: "/dashboard/settings",       icon: Settings,          label: "Configuración",          badge: null,  roles: ['administrador'] },
+  { href: "/dashboard",                      icon: LayoutDashboard, label: "Dashboard",               badge: null, roles: ['administrador','supervisor','operaria'] },
+  { href: "/dashboard/coordinacion",         icon: CalendarDays,    label: "Coordinación",            badge: null, roles: ['administrador','supervisor','operaria'] },
+  { href: "/dashboard/calculadora-traslado", icon: Calculator,      label: "Calculadora de Traslado", badge: null, roles: ['administrador','supervisor','operaria'] },
+  { href: "/dashboard/cotizaciones",         icon: FileSpreadsheet, label: "Cotizaciones",            badge: null, roles: ['administrador'] },
+  { href: "/dashboard/nosotros",             icon: Heart,           label: "Nosotros",                badge: null, roles: ['administrador','supervisor','operaria'] },
+  { href: "/dashboard/settings",             icon: Settings,        label: "Configuración",           badge: null, roles: ['administrador'] },
 ];
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -116,14 +107,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       
       if (matchedItem) {
         if (!matchedItem.roles.includes(profile.rol)) {
-          if (profile.rol === 'bodega') {
-            router.push("/dashboard/inventory");
-          } else {
-            router.push("/dashboard");
-          }
+          router.push("/dashboard");
         }
-      } else if (pathname === "/dashboard" && profile.rol === 'bodega') {
-        router.push("/dashboard/inventory");
       }
     }
   }, [profile, pathname, router]);

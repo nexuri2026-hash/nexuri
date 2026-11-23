@@ -100,7 +100,6 @@ function CoordinacionContent() {
     if (!techSearch.trim()) return;
     const newName = techSearch.trim();
 
-    // Determine next techNumber
     let maxNum = 0;
     techs.forEach(t => {
       if (t.techNumber) {
@@ -109,46 +108,17 @@ function CoordinacionContent() {
       }
     });
     const nextTechNumber = String(maxNum + 1).padStart(2, '0');
-
-    const newId = `tech-${Date.now()}`;
-
-    // Save to Supabase
-    const { data: inserted, error } = await supabase
-      .from("tecnicos")
-      .insert([{
-        id: newId,
-        tech_number: nextTechNumber,
-        name: newName,
-        rut: "—",
-        phone: "—",
-        email: "",
-        region: "Metropolitana",
-        vehicle: "",
-        status: "disponible",
-        certifications: [],
-        completed_orders: 0,
-        avg_time: 0,
-        productivity: 0,
-      }])
-      .select()
-      .single();
-
-    if (error) {
-      console.error("Error creando técnico:", error.message);
-      return;
-    }
-
     const newTech: Technician = {
-      id: inserted.id,
-      techNumber: inserted.tech_number,
-      name: inserted.name,
-      rut: inserted.rut || "—",
-      phone: inserted.phone || "—",
-      email: inserted.email || "",
-      region: inserted.region || "Metropolitana",
-      vehicle: inserted.vehicle || "",
+      id: `tech-${Date.now()}`,
+      techNumber: nextTechNumber,
+      name: newName,
+      rut: "—",
+      phone: "—",
+      email: "",
+      region: "Metropolitana",
+      vehicle: "",
       certifications: [],
-      status: inserted.status || "disponible",
+      status: "disponible",
       completedOrders: 0,
       avgTime: 0,
       productivity: 0,
@@ -157,27 +127,6 @@ function CoordinacionContent() {
     toggleTech(newName);
     setTechSearch("");
     setShowTechDropdown(false);
-  };
-
-  const fetchTechs = async () => {
-    const { data: rows, error } = await supabase.from("tecnicos").select("*").order("tech_number");
-    if (!error && rows) {
-      setTechs(rows.map((r) => ({
-        id: r.id,
-        techNumber: r.tech_number,
-        name: r.name,
-        rut: r.rut || "—",
-        phone: r.phone || "—",
-        email: r.email || "",
-        region: r.region || "",
-        vehicle: r.vehicle || "",
-        certifications: [],
-        status: r.status || "disponible",
-        completedOrders: 0,
-        avgTime: 0,
-        productivity: 0,
-      })));
-    }
   };
 
   const fetchServicios = async () => {
@@ -207,13 +156,34 @@ function CoordinacionContent() {
         return b.id - a.id;
       });
       setData(servicios);
+      // Poblar lista de asignados sugeridos a partir de los servicios existentes
+      const uniqueNames = new Set<string>();
+      servicios.forEach((s: any) => {
+        if (s.asignado_a) {
+          String(s.asignado_a).split(",").map(n => n.trim()).filter(Boolean).forEach(n => uniqueNames.add(n));
+        }
+      });
+      setTechs(Array.from(uniqueNames).map((name, idx) => ({
+        id: `tech-${idx + 1}`,
+        techNumber: String(idx + 1).padStart(2, '0'),
+        name,
+        rut: "—",
+        phone: "—",
+        email: "",
+        region: "",
+        vehicle: "",
+        certifications: [],
+        status: "disponible",
+        completedOrders: 0,
+        avgTime: 0,
+        productivity: 0,
+      })));
     }
     setLoading(false);
   };
 
   useEffect(() => {
     fetchServicios();
-    fetchTechs();
   }, []);
 
   const bancos = useMemo(() => {
