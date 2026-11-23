@@ -558,7 +558,6 @@ function CoordinacionContent() {
           <option value="all">Todas las categorías</option>
           <option value="PINTURA">Pintura</option>
           <option value="CAMARAS">Cámaras</option>
-          <option value="CERRAJERIA">Cerrajería</option>
           <option value="LLAVES">Llaves</option>
         </select>
 
@@ -1031,7 +1030,7 @@ function CoordinacionContent() {
                       <select
                         className="ops-select"
                         value={
-                          ["PINTURA", "CAMARAS", "CERRAJERIA", "LLAVES"]
+                          ["PINTURA", "CAMARAS", "LLAVES"]
                             .includes((formData.categoria || "").toUpperCase())
                             ? (formData.categoria || "").toUpperCase()
                             : (formData.categoria ? "OTRO" : "")
@@ -1039,7 +1038,7 @@ function CoordinacionContent() {
                         onChange={(e) => {
                           const val = e.target.value;
                           if (val === "OTRO") {
-                            if (["PINTURA", "CAMARAS", "CERRAJERIA", "LLAVES"].includes((formData.categoria || "").toUpperCase())) {
+                            if (["PINTURA", "CAMARAS", "LLAVES"].includes((formData.categoria || "").toUpperCase())) {
                               setFormData({ ...formData, categoria: "" });
                             }
                           } else {
@@ -1050,11 +1049,10 @@ function CoordinacionContent() {
                         <option value="">Selecciona categoría...</option>
                         <option value="PINTURA">Pintura</option>
                         <option value="CAMARAS">Cámaras</option>
-                        <option value="CERRAJERIA">Cerrajería</option>
                         <option value="LLAVES">Llaves</option>
                         <option value="OTRO">Otro (Personalizado...)</option>
                       </select>
-                      {(!["PINTURA", "CAMARAS", "CERRAJERIA", "LLAVES"].includes((formData.categoria || "").toUpperCase()) && formData.categoria !== undefined && formData.categoria !== "") && (
+                      {(!["PINTURA", "CAMARAS", "LLAVES"].includes((formData.categoria || "").toUpperCase()) && formData.categoria !== undefined && formData.categoria !== "") && (
                         <input
                           className="ops-input text-xs"
                           placeholder="Escribe categoría personalizada..."
