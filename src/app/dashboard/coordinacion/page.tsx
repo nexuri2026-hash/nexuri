@@ -415,9 +415,7 @@ function CoordinacionContent() {
             banco: formData.banco_empresa || "",
             local: formData.local || "",
             servicio: formData.categoria || formData.tipo_trabajo || "",
-            carlos: 0,
-            scott: 0,
-            ricardo: 0,
+            paula: 0,
             status: "Pendiente"
           };
           const nosotrosId = `coord-${insertedId}`;

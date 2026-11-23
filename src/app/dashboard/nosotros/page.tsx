@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { 
-  Heart, Plus, Edit2, Trash2, Search, X, DollarSign, Loader2, 
-  HelpCircle, CheckCircle2, UserCheck, AlertTriangle
+  Plus, Edit2, Trash2, Search, X, Loader2, 
+  UserCheck, AlertTriangle
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
@@ -15,20 +15,10 @@ interface NosotrosRecord {
   servicio: string;
   fecha?: string;
   numero_cotizacion?: string;
-  carlos: number;
-  scott: number;
-  ricardo: number;
+  paula: number;
   status: string;
   createdAt?: string;
 }
-
-// Datos semilla basados en el Excel YO.xlsx
-const SEED_DATA: NosotrosRecord[] = [
-  { id: "seed-1", atm: "164", banco: "Banco de Chile", local: "Casa Matriz", servicio: "Cerrajería", carlos: 110000, scott: 110000, ricardo: 100000, status: "Completado" },
-  { id: "seed-2", atm: "269", banco: "Scotiabank", local: "Sucursal Providencia", servicio: "Cerrajería", carlos: 110000, scott: 110000, ricardo: 100000, status: "Completado" },
-  { id: "seed-3", atm: "243", banco: "Scotiabank", local: "Sucursal Las Condes", servicio: "Cerrajería", carlos: 110000, scott: 110000, ricardo: 100000, status: "Completado" },
-  { id: "seed-4", atm: "1753", banco: "Santander", local: "Sucursal Santiago Centro", servicio: "Cerrajería", carlos: 100000, scott: 100000, ricardo: 100000, status: "Completado" }
-];
 
 export default function NosotrosPage() {
   const [records, setRecords] = useState<NosotrosRecord[]>([]);
@@ -47,9 +37,7 @@ export default function NosotrosPage() {
   const [local, setLocal] = useState("");
   const [servicio, setServicio] = useState("Cerrajería");
   const [numeroCotizacion, setNumeroCotizacion] = useState("");
-  const [carlos, setCarlos] = useState(0);
-  const [scott, setScott] = useState(0);
-  const [ricardo, setRicardo] = useState(0);
+  const [paula, setPaula] = useState(0);
   const [status, setStatus] = useState("Completado");
 
   // Fetch records
@@ -69,16 +57,13 @@ export default function NosotrosPage() {
       const { data, error } = nosotrosRes;
 
       if (error) {
-        // Si la tabla no existe en la base de datos (error 42P01)
         if (error.code === "42P01") {
-          console.warn("La tabla 'nosotros' no existe en Supabase. Cargando datos semilla locales.");
-          setRecords(SEED_DATA);
-          setDbError("La tabla 'nosotros' no existe en Supabase. Asegúrate de ejecutar el script SQL provisto. Mostrando datos locales temporales.");
+          setRecords([]);
+          setDbError("La tabla 'nosotros' no existe en Supabase.");
         } else {
           throw error;
         }
       } else if (data && data.length > 0) {
-        // Map de servicios de coordinación para enriquecer el local si no viene en el registro
         const serviciosList = serviciosRes.data || [];
         const coordMap = new Map<string, string>();
         const atmMap = new Map<string, string>();
@@ -105,7 +90,6 @@ export default function NosotrosPage() {
               localVal = atmMap.get(String(r.data.atm).trim().toLowerCase()) || "";
             }
           }
-          // Fecha desde servicios
           let fechaVal = r.data.fecha ?? "";
           if (!fechaVal) {
             if (fechaCoordMap.has(r.id)) {
@@ -114,7 +98,6 @@ export default function NosotrosPage() {
               fechaVal = fechaAtmMap.get(String(r.data.atm).trim().toLowerCase()) || "";
             }
           }
-          // N° Cotización desde servicios o local
           let cotiVal = r.data.numero_cotizacion ?? "";
           if (!cotiVal) {
             if (cotiCoordMap.has(r.id)) {
@@ -131,9 +114,7 @@ export default function NosotrosPage() {
             servicio: r.data.servicio ?? "",
             fecha: fechaVal,
             numero_cotizacion: cotiVal,
-            carlos: Number(r.data.carlos ?? 0),
-            scott: Number(r.data.scott ?? 0),
-            ricardo: Number(r.data.ricardo ?? 0),
+            paula: Number(r.data.paula ?? 0),
             status: r.data.status ?? "",
             createdAt: r.created_at
           };
@@ -141,30 +122,13 @@ export default function NosotrosPage() {
         setRecords(mapped);
         setDbError(null);
       } else {
-        // Si está vacía pero la tabla existe, insertamos las semillas automáticamente para comenzar
-        console.log("Tabla 'nosotros' vacía. Insertando datos semilla.");
-        for (const item of SEED_DATA) {
-          await supabase.from("nosotros").insert({
-            id: item.id,
-            data: {
-              atm: item.atm,
-              banco: item.banco,
-              local: item.local,
-              servicio: item.servicio,
-              carlos: item.carlos,
-              scott: item.scott,
-              ricardo: item.ricardo,
-              status: item.status
-            }
-          });
-        }
-        setRecords(SEED_DATA);
+        setRecords([]);
         setDbError(null);
       }
     } catch (e: any) {
       console.error("Error cargando base de datos:", e);
       setDbError(`Error al conectar con la base de datos: ${e.message || e}`);
-      setRecords(SEED_DATA); // Fallback a local
+      setRecords([]);
     } finally {
       setLoading(false);
     }
@@ -182,9 +146,7 @@ export default function NosotrosPage() {
     setLocal("");
     setServicio("Cerrajería");
     setNumeroCotizacion("");
-    setCarlos(0);
-    setScott(0);
-    setRicardo(0);
+    setPaula(0);
     setStatus("Completado");
     setIsModalOpen(true);
   };
@@ -196,9 +158,7 @@ export default function NosotrosPage() {
     setLocal(rec.local || "");
     setServicio(rec.servicio);
     setNumeroCotizacion(rec.numero_cotizacion || "");
-    setCarlos(rec.carlos);
-    setScott(rec.scott);
-    setRicardo(rec.ricardo);
+    setPaula(rec.paula);
     setStatus(rec.status);
     setIsModalOpen(true);
   };
@@ -213,23 +173,19 @@ export default function NosotrosPage() {
       local,
       servicio,
       numero_cotizacion: numeroCotizacion,
-      carlos: Number(carlos),
-      scott: Number(scott),
-      ricardo: Number(ricardo),
+      paula: Number(paula),
       status
     };
 
     const id = editingRecord ? editingRecord.id : `rec-${Date.now()}`;
 
     try {
-      // Guardar localmente
       if (editingRecord) {
         setRecords(prev => prev.map(r => r.id === id ? { ...r, ...payload } : r));
       } else {
         setRecords(prev => [...prev, { id, ...payload }]);
       }
 
-      // Guardar en Supabase
       const { error } = await supabase.from("nosotros").upsert({
         id,
         data: payload
@@ -272,9 +228,8 @@ export default function NosotrosPage() {
           banco: record.banco,
           local: record.local || "",
           servicio: record.servicio,
-          carlos: record.carlos,
-          scott: record.scott,
-          ricardo: record.ricardo,
+          numero_cotizacion: record.numero_cotizacion || "",
+          paula: record.paula,
           status: newStatus
         }
       });
@@ -282,8 +237,6 @@ export default function NosotrosPage() {
       console.error("Error actualizando estado:", e);
     }
   };
-
-  // NOTA: totalCarlos/Scott/Ricardo se calculan DESPUÉS de filteredRecords (más abajo)
 
   const fmtCLP = (n: number) => {
     return "$ " + n.toLocaleString("es-CL");
@@ -300,7 +253,6 @@ export default function NosotrosPage() {
     label: nombre
   }));
 
-  // Parsea fecha en formato DD-MM-YYYY o YYYY-MM-DD
   const parseFecha = (fecha: string | undefined): { anio: string; mes: string } => {
     if (!fecha) return { anio: "", mes: "" };
     const ddmmyyyy = fecha.match(/^(\d{2})-(\d{2})-(\d{4})$/);
@@ -310,7 +262,6 @@ export default function NosotrosPage() {
     return { anio: "", mes: "" };
   };
 
-  // Años disponibles (dinámicos desde los datos) más años futuros hasta 2030
   const aniosConDatos = Array.from(
     new Set(records.map(r => parseFecha(r.fecha).anio).filter(Boolean))
   );
@@ -332,25 +283,10 @@ export default function NosotrosPage() {
   });
 
   // Totales de la tabla visible
-  const filteredCompletedCarlos = filteredRecords.reduce((sum, r) => isCompletado(r.status) ? sum + Number(r.carlos || 0) : sum, 0);
-  const filteredCompletedScott = filteredRecords.reduce((sum, r) => isCompletado(r.status) ? sum + Number(r.scott || 0) : sum, 0);
-  const filteredCompletedRicardo = filteredRecords.reduce((sum, r) => isCompletado(r.status) ? sum + Number(r.ricardo || 0) : sum, 0);
+  const totalPaula = filteredRecords.reduce((sum, r) => isCompletado(r.status) ? sum + Number(r.paula || 0) : sum, 0);
+  const pendingPaula = filteredRecords.reduce((sum, r) => !isCompletado(r.status) ? sum + Number(r.paula || 0) : sum, 0);
+  const hasPendingFiltered = pendingPaula > 0;
 
-  const filteredPendingCarlos = filteredRecords.reduce((sum, r) => !isCompletado(r.status) ? sum + Number(r.carlos || 0) : sum, 0);
-  const filteredPendingScott = filteredRecords.reduce((sum, r) => !isCompletado(r.status) ? sum + Number(r.scott || 0) : sum, 0);
-  const filteredPendingRicardo = filteredRecords.reduce((sum, r) => !isCompletado(r.status) ? sum + Number(r.ricardo || 0) : sum, 0);
-
-  const hasPendingFiltered = (filteredPendingCarlos + filteredPendingScott + filteredPendingRicardo) > 0;
-
-  // Totales de las tarjetas = basados en filteredRecords (responden al filtro activo)
-  const totalCarlos = filteredCompletedCarlos;
-  const totalScott = filteredCompletedScott;
-  const totalRicardo = filteredCompletedRicardo;
-  const pendingCarlos = filteredPendingCarlos;
-  const pendingScott = filteredPendingScott;
-  const pendingRicardo = filteredPendingRicardo;
-
-  // Etiqueta del filtro activo para mostrar en las tarjetas
   const MESES_ES_LABEL: Record<string, string> = {
     "01": "Enero", "02": "Febrero", "03": "Marzo", "04": "Abril",
     "05": "Mayo", "06": "Junio", "07": "Julio", "08": "Agosto",
@@ -376,87 +312,32 @@ export default function NosotrosPage() {
         </div>
       )}
 
-      {/* ── SECCIÓN SUPERIOR: TARJETAS DE ACUMULADOS ─────────────────────────── */}
+      {/* ── SECCIÓN SUPERIOR: TARJETA DE ACUMULADO PAULA ─────────────────────── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        
-        {/* Tarjeta Carlos */}
-        <div className="relative p-6 rounded-2xl flex flex-col justify-between overflow-hidden border border-slate-800"
-          style={{ background: "linear-gradient(135deg, #1b263b 0%, #121a2e 100%)" }}>
-          <div className="absolute top-0 right-0 p-4 opacity-10">
-            <UserCheck size={80} className="text-sky-400" />
-          </div>
-          <div>
-            <div className="flex items-center justify-between mb-1">
-              <div className="text-xs font-extrabold text-sky-400 tracking-wider uppercase">Acumulado Carlos</div>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-sky-500/10 text-sky-300 font-bold border border-sky-500/20">
-                {filtroLabel ? filtroLabel : "Completados"}
-              </span>
-            </div>
-            <div className="text-3xl font-extrabold tracking-tight text-white">{fmtCLP(totalCarlos)}</div>
-            {pendingCarlos > 0 && (
-              <div className="text-xs font-semibold text-amber-400 mt-1 flex items-center gap-1">
-                <span>⏳ +{fmtCLP(pendingCarlos)} pendientes</span>
-              </div>
-            )}
-          </div>
-          <div className="flex items-center gap-2 mt-4 text-[11px] text-sky-300 font-semibold">
-            <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" />
-            Asignado a Trabajos en Terreno
-          </div>
-        </div>
-
-        {/* Tarjeta Scott */}
-        <div className="relative p-6 rounded-2xl flex flex-col justify-between overflow-hidden border border-slate-800"
+        <div className="relative p-6 rounded-2xl flex flex-col justify-between overflow-hidden border border-slate-800 md:col-span-1"
           style={{ background: "linear-gradient(135deg, #1d352d 0%, #11221b 100%)" }}>
           <div className="absolute top-0 right-0 p-4 opacity-10">
             <UserCheck size={80} className="text-emerald-400" />
           </div>
           <div>
             <div className="flex items-center justify-between mb-1">
-              <div className="text-xs font-extrabold text-emerald-400 tracking-wider uppercase">Acumulado Scott</div>
+              <div className="text-xs font-extrabold text-emerald-400 tracking-wider uppercase">Acumulado Paula</div>
               <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 font-bold border border-emerald-500/20">
                 {filtroLabel ? filtroLabel : "Completados"}
               </span>
             </div>
-            <div className="text-3xl font-extrabold tracking-tight text-white">{fmtCLP(totalScott)}</div>
-            {pendingScott > 0 && (
+            <div className="text-3xl font-extrabold tracking-tight text-white">{fmtCLP(totalPaula)}</div>
+            {pendingPaula > 0 && (
               <div className="text-xs font-semibold text-amber-400 mt-1 flex items-center gap-1">
-                <span>⏳ +{fmtCLP(pendingScott)} pendientes</span>
+                <span>⏳ +{fmtCLP(pendingPaula)} pendientes</span>
               </div>
             )}
           </div>
           <div className="flex items-center gap-2 mt-4 text-[11px] text-emerald-300 font-semibold">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            Asignado a Coordinación y Control
+            Coordinación y Control — Nexuri
           </div>
         </div>
-
-        {/* Tarjeta Ricardo */}
-        <div className="relative p-6 rounded-2xl flex flex-col justify-between overflow-hidden border border-slate-800"
-          style={{ background: "linear-gradient(135deg, #2b2b35 0%, #1d1d24 100%)" }}>
-          <div className="absolute top-0 right-0 p-4 opacity-10">
-            <UserCheck size={80} className="text-indigo-400" />
-          </div>
-          <div>
-            <div className="flex items-center justify-between mb-1">
-              <div className="text-xs font-extrabold text-indigo-400 tracking-wider uppercase">Acumulado Ricardo</div>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-300 font-bold border border-indigo-500/20">
-                {filtroLabel ? filtroLabel : "Completados"}
-              </span>
-            </div>
-            <div className="text-3xl font-extrabold tracking-tight text-white">{fmtCLP(totalRicardo)}</div>
-            {pendingRicardo > 0 && (
-              <div className="text-xs font-semibold text-amber-400 mt-1 flex items-center gap-1">
-                <span>⏳ +{fmtCLP(pendingRicardo)} pendientes</span>
-              </div>
-            )}
-          </div>
-          <div className="flex items-center gap-2 mt-4 text-[11px] text-indigo-300 font-semibold">
-            <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse" />
-            Asignado a Operaciones Generales
-          </div>
-        </div>
-
       </div>
 
       {/* ── TOOLBAR / CONTROLES DE TABLA ─────────────────────────────────────── */}
@@ -568,10 +449,7 @@ export default function NosotrosPage() {
                   <th className="px-6 py-4 text-left text-xs font-bold text-slate-400 uppercase tracking-wider">Banco</th>
                   <th className="px-6 py-4 text-left text-xs font-bold text-slate-400 uppercase tracking-wider">Local</th>
                   <th className="px-6 py-4 text-left text-xs font-bold text-slate-400 uppercase tracking-wider">Servicio</th>
-                  <th className="px-6 py-4 text-right text-xs font-bold text-sky-400 uppercase tracking-wider">Carlos</th>
-                  <th className="px-6 py-4 text-right text-xs font-bold text-emerald-400 uppercase tracking-wider">Scott</th>
-                  <th className="px-6 py-4 text-right text-xs font-bold text-indigo-400 uppercase tracking-wider">Ricardo</th>
-                  <th className="px-6 py-4 text-right text-xs font-bold text-slate-300 uppercase tracking-wider">Total (Fila)</th>
+                  <th className="px-6 py-4 text-right text-xs font-bold text-emerald-400 uppercase tracking-wider">Paula</th>
                   <th className="px-6 py-4 text-center text-xs font-bold text-slate-400 uppercase tracking-wider">Status</th>
                   <th className="px-6 py-4 text-center text-xs font-bold text-slate-400 uppercase tracking-wider w-24">Acciones</th>
                 </tr>
@@ -579,13 +457,12 @@ export default function NosotrosPage() {
               <tbody>
                 {filteredRecords.length === 0 ? (
                   <tr>
-                    <td colSpan={12} className="px-6 py-12 text-center text-slate-500 text-sm">
+                    <td colSpan={9} className="px-6 py-12 text-center text-slate-500 text-sm">
                       No se encontraron registros que coincidan con la búsqueda.
                     </td>
                   </tr>
                 ) : (
                   filteredRecords.map((r) => {
-                    const rowTotal = r.carlos + r.scott + r.ricardo;
                     const completado = isCompletado(r.status);
                     return (
                       <tr key={r.id} className="hover:bg-white/[0.01] transition-colors border-b border-slate-800/40">
@@ -595,10 +472,7 @@ export default function NosotrosPage() {
                         <td className="px-6 py-3.5 text-sm text-slate-300 font-medium">{r.banco}</td>
                         <td className="px-6 py-3.5 text-sm text-slate-300 font-medium">{r.local || "-"}</td>
                         <td className="px-6 py-3.5 text-sm text-slate-400">{r.servicio}</td>
-                        <td className={`px-6 py-3.5 text-sm text-right font-mono ${completado ? "text-sky-300" : "text-slate-400"}`}>{fmtCLP(r.carlos)}</td>
-                        <td className={`px-6 py-3.5 text-sm text-right font-mono ${completado ? "text-emerald-300" : "text-slate-400"}`}>{fmtCLP(r.scott)}</td>
-                        <td className={`px-6 py-3.5 text-sm text-right font-mono ${completado ? "text-indigo-300" : "text-slate-400"}`}>{fmtCLP(r.ricardo)}</td>
-                        <td className="px-6 py-3.5 text-sm text-right text-white font-bold font-mono">{fmtCLP(rowTotal)}</td>
+                        <td className={`px-6 py-3.5 text-sm text-right font-bold font-mono ${completado ? "text-emerald-300" : "text-slate-400"}`}>{fmtCLP(r.paula)}</td>
                         <td className="px-6 py-3.5 text-sm text-center">
                           <button
                             type="button"
@@ -643,13 +517,10 @@ export default function NosotrosPage() {
                   <>
                     <tr style={{ background: "rgba(255,255,255,0.03)" }} className="font-bold border-t-2 border-slate-700">
                       <td colSpan={6} className="px-6 py-3 text-xs font-extrabold text-emerald-400 uppercase tracking-wider text-left">
-                        TOTALES (COMPLETADOS)
+                        TOTAL (COMPLETADOS)
                       </td>
-                      <td className="px-6 py-3 text-sm text-right text-sky-400 font-mono">{fmtCLP(filteredCompletedCarlos)}</td>
-                      <td className="px-6 py-3 text-sm text-right text-emerald-400 font-mono">{fmtCLP(filteredCompletedScott)}</td>
-                      <td className="px-6 py-3 text-sm text-right text-indigo-400 font-mono">{fmtCLP(filteredCompletedRicardo)}</td>
                       <td className="px-6 py-3 text-base text-right text-emerald-400 font-extrabold font-mono" style={{ borderLeft: "1px solid rgba(255,255,255,0.05)" }}>
-                        {fmtCLP(filteredCompletedCarlos + filteredCompletedScott + filteredCompletedRicardo)}
+                        {fmtCLP(totalPaula)}
                       </td>
                       <td colSpan={2} className="text-[11px] text-center text-slate-400">Sumado al balance</td>
                     </tr>
@@ -659,26 +530,20 @@ export default function NosotrosPage() {
                       <>
                         <tr style={{ background: "rgba(245,158,11,0.03)" }} className="font-semibold text-xs border-t border-slate-800">
                           <td colSpan={6} className="px-6 py-2.5 text-xs font-bold text-amber-400 uppercase tracking-wider text-left">
-                            TOTALES (PENDIENTES)
+                            TOTAL (PENDIENTES)
                           </td>
-                          <td className="px-6 py-2.5 text-sm text-right text-amber-300/80 font-mono">{fmtCLP(filteredPendingCarlos)}</td>
-                          <td className="px-6 py-2.5 text-sm text-right text-amber-300/80 font-mono">{fmtCLP(filteredPendingScott)}</td>
-                          <td className="px-6 py-2.5 text-sm text-right text-amber-300/80 font-mono">{fmtCLP(filteredPendingRicardo)}</td>
                           <td className="px-6 py-2.5 text-sm text-right text-amber-400 font-bold font-mono" style={{ borderLeft: "1px solid rgba(255,255,255,0.05)" }}>
-                            {fmtCLP(filteredPendingCarlos + filteredPendingScott + filteredPendingRicardo)}
+                            {fmtCLP(pendingPaula)}
                           </td>
-                          <td colSpan={2} className="text-[10px] text-center text-amber-400/80">Haz clic en "Pendiente" para completar</td>
+                          <td colSpan={2} className="text-[10px] text-center text-amber-400/80">Haz clic en &quot;Pendiente&quot; para completar</td>
                         </tr>
 
                         <tr style={{ background: "rgba(255,255,255,0.05)" }} className="font-bold border-t border-slate-700">
                           <td colSpan={6} className="px-6 py-3 text-xs font-extrabold text-white uppercase tracking-wider text-left">
                             GRAN TOTAL (TODOS LOS REGISTROS)
                           </td>
-                          <td className="px-6 py-3 text-sm text-right text-slate-200 font-mono">{fmtCLP(filteredCompletedCarlos + filteredPendingCarlos)}</td>
-                          <td className="px-6 py-3 text-sm text-right text-slate-200 font-mono">{fmtCLP(filteredCompletedScott + filteredPendingScott)}</td>
-                          <td className="px-6 py-3 text-sm text-right text-slate-200 font-mono">{fmtCLP(filteredCompletedRicardo + filteredPendingRicardo)}</td>
                           <td className="px-6 py-3 text-base text-right text-white font-extrabold font-mono" style={{ borderLeft: "1px solid rgba(255,255,255,0.05)" }}>
-                            {fmtCLP(filteredCompletedCarlos + filteredCompletedScott + filteredCompletedRicardo + filteredPendingCarlos + filteredPendingScott + filteredPendingRicardo)}
+                            {fmtCLP(totalPaula + pendingPaula)}
                           </td>
                           <td colSpan={2}></td>
                         </tr>
@@ -796,57 +661,22 @@ export default function NosotrosPage() {
                 </div>
               </div>
 
-              {/* ASIGNACIÓN DE MONTOS */}
+              {/* ASIGNACIÓN DE MONTO PAULA */}
               <div className="p-4 rounded-xl border border-slate-800 space-y-3" style={{ background: "rgba(255,255,255,0.01)" }}>
                 <div className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
-                  Asignación de Pagos (CLP)
+                  Asignación de Pago (CLP)
                 </div>
 
-                <div className="grid grid-cols-3 gap-3">
-                  {/* Carlos */}
-                  <div>
-                    <label className="block text-[10px] font-bold text-sky-400 mb-1 uppercase">Carlos</label>
-                    <input
-                      type="number"
-                      min="0"
-                      value={carlos}
-                      onChange={(e) => setCarlos(Number(e.target.value))}
-                      className="w-full px-3 py-1.5 rounded-lg text-sm border focus:outline-none"
-                      style={{ background: "#121418", borderColor: "rgba(255,255,255,0.05)", color: "#f1f5f9" }}
-                    />
-                  </div>
-
-                  {/* Scott */}
-                  <div>
-                    <label className="block text-[10px] font-bold text-emerald-400 mb-1 uppercase">Scott</label>
-                    <input
-                      type="number"
-                      min="0"
-                      value={scott}
-                      onChange={(e) => setScott(Number(e.target.value))}
-                      className="w-full px-3 py-1.5 rounded-lg text-sm border focus:outline-none"
-                      style={{ background: "#121418", borderColor: "rgba(255,255,255,0.05)", color: "#f1f5f9" }}
-                    />
-                  </div>
-
-                  {/* Ricardo */}
-                  <div>
-                    <label className="block text-[10px] font-bold text-indigo-400 mb-1 uppercase">Ricardo</label>
-                    <input
-                      type="number"
-                      min="0"
-                      value={ricardo}
-                      onChange={(e) => setRicardo(Number(e.target.value))}
-                      className="w-full px-3 py-1.5 rounded-lg text-sm border focus:outline-none"
-                      style={{ background: "#121418", borderColor: "rgba(255,255,255,0.05)", color: "#f1f5f9" }}
-                    />
-                  </div>
-                </div>
-
-                {/* Suma total previsualizada */}
-                <div className="flex justify-between items-center text-xs font-semibold text-slate-400 pt-2 border-t border-slate-800">
-                  <span>Suma Total Asignada:</span>
-                  <span className="text-sm font-bold text-white font-mono">{fmtCLP(Number(carlos) + Number(scott) + Number(ricardo))}</span>
+                <div>
+                  <label className="block text-[10px] font-bold text-emerald-400 mb-1 uppercase">Paula</label>
+                  <input
+                    type="number"
+                    min="0"
+                    value={paula}
+                    onChange={(e) => setPaula(Number(e.target.value))}
+                    className="w-full px-3 py-1.5 rounded-lg text-sm border focus:outline-none"
+                    style={{ background: "#121418", borderColor: "rgba(255,255,255,0.05)", color: "#f1f5f9" }}
+                  />
                 </div>
               </div>
 
