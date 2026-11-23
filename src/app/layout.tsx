@@ -4,11 +4,11 @@ import { CONFIG } from "@/lib/config";
 
 export const metadata: Metadata = {
   title: {
-    default: `${CONFIG.SYSTEM_NAME} — Sistema de Gestión de Operaciones`,
+    default: `${CONFIG.SYSTEM_NAME} — Cotizaciones, Compras y Entregas`,
     template: `%s | ${CONFIG.SYSTEM_NAME}`,
   },
   description:
-    "Plataforma corporativa para gestión de operaciones técnicas.",
+    "Plataforma de gestión de pedidos, cotizaciones de productos, compras y coordinación de entregas.",
   icons: {
     icon: CONFIG.LOGO_PATH,
     shortcut: CONFIG.LOGO_PATH,

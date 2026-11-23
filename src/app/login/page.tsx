@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Eye, EyeOff, Cpu, ShieldCheck, Zap, Key } from "lucide-react";
+import { Eye, EyeOff, FileSpreadsheet, ShoppingBag, Truck, Key } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { CONFIG } from "@/lib/config";
 
@@ -46,27 +46,27 @@ export default function LoginPage() {
             )}
             <div>
               <div className="font-bold text-lg leading-none" style={{ color: "#FFE3EC" }}>{CONFIG.SYSTEM_NAME}</div>
-              <div className="text-xs font-medium mt-1" style={{ color: "#FF9FB5" }}>Sistema de Operaciones</div>
+              <div className="text-xs font-medium mt-1" style={{ color: "#FF9FB5" }}>Cotizaciones · Compras · Entregas</div>
             </div>
           </div>
 
           {/* Hero text */}
           <h1 className="text-4xl font-bold leading-tight mb-4" style={{ color: "#FFE3EC" }}>
-            Gestión de operaciones
+            Gestión de pedidos,
             <br />
-            <span className="gradient-text">en tiempo real</span>
+            <span className="gradient-text">compras y entregas</span>
           </h1>
           <p style={{ color: "#FF9FB5", opacity: 0.85, fontSize: "15px", lineHeight: "1.7" }}>
-            Control y gestión de operaciones, coordinaciones y cotizaciones — todo en una sola plataforma elegante.
+            Recibe solicitudes de productos, genera cotizaciones al instante, gestiona la compra y coordina cada entrega — todo desde un solo lugar.
           </p>
         </div>
 
         {/* Feature pills */}
         <div className="space-y-3">
           {[
-            { icon: <Zap size={15} />, label: "Monitoreo en tiempo real", sub: "Coordinaciones y operaciones activas" },
-            { icon: <ShieldCheck size={15} />, label: "Control de acceso por roles", sub: "Administrador, Supervisor y Operaria" },
-            { icon: <Cpu size={15} />, label: "Cotizaciones y Calculadora", sub: "Generación rápida en un clic" },
+            { icon: <FileSpreadsheet size={15} />, label: "Cotizaciones rápidas", sub: "Arma presupuestos en PDF y Word para tus clientes" },
+            { icon: <ShoppingBag size={15} />, label: "Gestión de compras y pedidos", sub: "Controla cada producto solicitado y tus ganancias" },
+            { icon: <Truck size={15} />, label: "Coordinación y entregas", sub: "Programa despachos y calcula costos de traslado" },
           ].map((f, i) => (
             <div key={i} className="flex items-center gap-3 p-3 rounded-xl" style={{ background: "rgba(255,227,236,0.04)", border: "1px solid rgba(255,159,181,0.16)" }}>
               <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "linear-gradient(135deg, rgba(200,29,58,0.35), rgba(255,92,138,0.25))", color: "#FF9FB5" }}>
