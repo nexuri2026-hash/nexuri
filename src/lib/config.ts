@@ -2,22 +2,22 @@
 
 export const CONFIG = {
   // Nombre del sistema (se usa en títulos y menús)
-  SYSTEM_NAME: "OpsVaultec",
+  SYSTEM_NAME: "Nexuri",
   
   // Nombre completo de la empresa (para pantallas corporativas)
-  COMPANY_NAME: "Vaultec SpA",
+  COMPANY_NAME: "Nexuri SpA",
   
   // Dominio de correo electrónico por defecto para placeholders y sugerencias
-  DEFAULT_EMAIL_DOMAIN: "vaultec.cl",
+  DEFAULT_EMAIL_DOMAIN: "nexuri.cl",
   
   // Texto de derechos de autor (copyright)
-  COPYRIGHT_TEXT: `© ${new Date().getFullYear()} Vaultec. Todos los derechos reservados.`,
+  COPYRIGHT_TEXT: `© ${new Date().getFullYear()} Nexuri. Todos los derechos reservados.`,
   
   // Versión del sistema
   SYSTEM_VERSION: "v2026.1",
   
   // Ruta al logo de la empresa
-  LOGO_PATH: "/logo.png",
+  LOGO_PATH: "/LOGO-NEXURI.jpeg",
   
   // ¿Usar el logo como imagen física o preferir un logo dinámico con icono CSS?
   // true = usa LOGO_PATH. false = dibuja un logo premium usando CSS + Lucide Icon

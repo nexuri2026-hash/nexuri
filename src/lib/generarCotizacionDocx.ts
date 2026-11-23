@@ -177,10 +177,12 @@ export async function generarCotizacionDocx(cot: Cotizacion): Promise<Buffer> {
 
   // ── Cargar logo ─────────────────────────────────────────────────────────────
   let logoBuffer: Buffer | null = null;
+  let logoType: 'jpg' | 'png' = 'jpg';
   try {
-    const cotiPath = path.join(publicPath, 'coti.png');
-    if (fs.existsSync(cotiPath)) {
-      logoBuffer = fs.readFileSync(cotiPath);
+    const nexuriPath = path.join(publicPath, 'LOGO-NEXURI.jpeg');
+    if (fs.existsSync(nexuriPath)) {
+      logoBuffer = fs.readFileSync(nexuriPath);
+      logoType = 'jpg';
     } else {
       const clean = logoB64.replace(/^data:image\/\w+;base64,/, '');
       logoBuffer = Buffer.from(clean, 'base64');
@@ -254,7 +256,7 @@ export async function generarCotizacionDocx(cot: Cotizacion): Promise<Buffer> {
         spacing: { before: 80 },
         children: [
           new TextRun({
-            text: 'Contacto@vaultec.cl',
+            text: 'contacto@nexuri.cl',
             size: 20,
             color: 'FFFFFF',
             font: 'Calibri',
@@ -283,11 +285,11 @@ export async function generarCotizacionDocx(cot: Cotizacion): Promise<Buffer> {
                 children: logoBuffer ? [
                   new ImageRun({
                     data: logoBuffer,
-                    type: 'png',
+                    type: logoType,
                     transformation: { width: 85, height: 85 },
                   }),
                 ] : [
-                  new TextRun({ text: 'VAULTEC', bold: true, size: 32, color: NAVY, font: 'Calibri' }),
+                  new TextRun({ text: 'NEXURI', bold: true, size: 32, color: NAVY, font: 'Calibri' }),
                 ],
               }),
             ],

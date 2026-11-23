@@ -8,8 +8,12 @@ export const metadata: Metadata = {
     template: `%s | ${CONFIG.SYSTEM_NAME}`,
   },
   description:
-    "Plataforma corporativa para gestión de operaciones técnicas. Control de órdenes, técnicos, inventario, mapas e informes en tiempo real.",
-  keywords: ["gestión operaciones", "órdenes de trabajo", "técnicos campo", "mantenimiento", "seguridad", "anclajes"],
+    "Plataforma corporativa para gestión de operaciones técnicas.",
+  icons: {
+    icon: CONFIG.LOGO_PATH,
+    shortcut: CONFIG.LOGO_PATH,
+    apple: CONFIG.LOGO_PATH,
+  },
 };
 
 export default function RootLayout({

@@ -230,7 +230,7 @@ function PrintView({ cot, onClose }: { cot: Cotizacion; onClose: () => void }) {
                   {/* HEADER */}
                   <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:'6mm' }}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src="/coti.png" alt="vaultec" style={{ width:'30mm', height:'30mm', objectFit:'contain' }}/>
+                    <img src="/LOGO-NEXURI.jpeg" alt="Nexuri" style={{ width:'30mm', height:'30mm', objectFit:'contain' }}/>
                     <div style={{ textAlign:'right' }}>
                       <div style={{ fontFamily:"'Montserrat',sans-serif", fontWeight:800, fontSize:'17pt', color:TITLE_GRAY, lineHeight:1.1 }}>
                         COTIZACI&Oacute;N #{cot.numero || '___'}
@@ -335,7 +335,7 @@ function PrintView({ cot, onClose }: { cot: Cotizacion; onClose: () => void }) {
 
                 {/* FOOTER EMAIL */}
                 <div style={{ position:'absolute', bottom:'14mm', left:0, right:0, zIndex:3, textAlign:'center' }}>
-                  <span style={{ fontFamily:"'Poppins',sans-serif", fontWeight:300, fontSize:'9pt', color:'white' }}>contacto@vaultec.cl</span>
+                  <span style={{ fontFamily:"'Poppins',sans-serif", fontWeight:300, fontSize:'9pt', color:'white' }}>contacto@nexuri.cl</span>
                 </div>
 
               </div>
