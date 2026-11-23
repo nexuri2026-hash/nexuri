@@ -299,42 +299,42 @@ export default function NosotrosPage() {
     : null;
 
   return (
-    <div className="flex-1 overflow-y-auto p-6 space-y-6 text-slate-100" style={{ background: "#121418" }}>
+    <div className="flex-1 overflow-y-auto p-6 space-y-6" style={{ color: "#FFE3EC" }}>
       
       {/* Alerta de Tabla no creada */}
       {dbError && (
-        <div className="p-4 rounded-xl flex items-start gap-3 border" style={{ background: "rgba(245,158,11,0.06)", borderColor: "rgba(245,158,11,0.2)" }}>
-          <AlertTriangle className="text-amber-500 flex-shrink-0 mt-0.5" size={18} />
+        <div className="p-4 rounded-xl flex items-start gap-3 border" style={{ background: "rgba(200,29,58,0.15)", borderColor: "rgba(255,92,138,0.35)" }}>
+          <AlertTriangle className="flex-shrink-0 mt-0.5" style={{ color: "#FF5C8A" }} size={18} />
           <div>
-            <div className="font-bold text-amber-500 text-sm">Nota de Conectividad</div>
-            <div className="text-xs text-slate-400 mt-0.5">{dbError}</div>
+            <div className="font-bold text-sm" style={{ color: "#FFE3EC" }}>Nota de Conectividad</div>
+            <div className="text-xs mt-0.5" style={{ color: "#FF9FB5" }}>{dbError}</div>
           </div>
         </div>
       )}
 
       {/* ── SECCIÓN SUPERIOR: TARJETA DE ACUMULADO PAULA ─────────────────────── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="relative p-6 rounded-2xl flex flex-col justify-between overflow-hidden border border-slate-800 md:col-span-1"
-          style={{ background: "linear-gradient(135deg, #1d352d 0%, #11221b 100%)" }}>
-          <div className="absolute top-0 right-0 p-4 opacity-10">
-            <UserCheck size={80} className="text-emerald-400" />
+        <div className="relative p-6 rounded-2xl flex flex-col justify-between overflow-hidden md:col-span-1"
+          style={{ background: "linear-gradient(135deg, #7A2E40 0%, #38131e 55%, #C81D3A 100%)", border: "1px solid rgba(255,159,181,0.35)", boxShadow: "0 12px 32px rgba(200,29,58,0.3)" }}>
+          <div className="absolute top-0 right-0 p-4 opacity-15">
+            <UserCheck size={80} style={{ color: "#FFE3EC" }} />
           </div>
           <div>
             <div className="flex items-center justify-between mb-1">
-              <div className="text-xs font-extrabold text-emerald-400 tracking-wider uppercase">Acumulado Paula</div>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 font-bold border border-emerald-500/20">
+              <div className="text-xs font-extrabold tracking-wider uppercase" style={{ color: "#FF9FB5" }}>Acumulado Paula</div>
+              <span className="text-[10px] px-2.5 py-0.5 rounded-full font-bold" style={{ background: "rgba(255,227,236,0.14)", color: "#FFE3EC", border: "1px solid rgba(255,159,181,0.35)" }}>
                 {filtroLabel ? filtroLabel : "Completados"}
               </span>
             </div>
-            <div className="text-3xl font-extrabold tracking-tight text-white">{fmtCLP(totalPaula)}</div>
+            <div className="text-3xl font-extrabold tracking-tight" style={{ color: "#FFE3EC" }}>{fmtCLP(totalPaula)}</div>
             {pendingPaula > 0 && (
-              <div className="text-xs font-semibold text-amber-400 mt-1 flex items-center gap-1">
+              <div className="text-xs font-semibold mt-1 flex items-center gap-1" style={{ color: "#FF9FB5" }}>
                 <span>⏳ +{fmtCLP(pendingPaula)} pendientes</span>
               </div>
             )}
           </div>
-          <div className="flex items-center gap-2 mt-4 text-[11px] text-emerald-300 font-semibold">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          <div className="flex items-center gap-2 mt-4 text-[11px] font-semibold" style={{ color: "#FFE3EC" }}>
+            <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#FF5C8A" }} />
             Coordinación y Control — Nexuri
           </div>
         </div>
@@ -345,32 +345,25 @@ export default function NosotrosPage() {
         
         {/* Buscador */}
         <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: "#FF9FB5" }} size={16} />
           <input
             type="text"
             placeholder="Buscar por banco, ATM o tipo de servicio..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 rounded-xl text-sm border focus:outline-none transition-all"
-            style={{ 
-              background: "#1b1e24", 
-              borderColor: "rgba(255,255,255,0.05)",
-              color: "#e2e8f0"
-            }}
+            className="ops-input pl-9"
           />
         </div>
 
         {/* Filtro por Año */}
         <div className="flex items-center gap-2">
-          <span className="text-xs text-slate-500 font-semibold uppercase tracking-wider whitespace-nowrap">📆 Año:</span>
+          <span className="text-xs font-semibold uppercase tracking-wider whitespace-nowrap" style={{ color: "#FF9FB5" }}>📆 Año:</span>
           <select
             value={filterAnio}
             onChange={(e) => setFilterAnio(e.target.value)}
-            className="px-3 py-2 rounded-xl text-sm border focus:outline-none transition-all"
+            className="ops-select text-sm"
             style={{
-              background: "#1b1e24",
-              borderColor: filterAnio !== "todos" ? "rgba(99,179,237,0.5)" : "rgba(255,255,255,0.05)",
-              color: filterAnio !== "todos" ? "#90cdf4" : "#e2e8f0",
+              borderColor: filterAnio !== "todos" ? "#FF5C8A" : "rgba(255,159,181,0.22)",
               fontWeight: filterAnio !== "todos" ? 700 : 400,
             }}
           >
@@ -382,7 +375,8 @@ export default function NosotrosPage() {
           {filterAnio !== "todos" && (
             <button
               onClick={() => setFilterAnio("todos")}
-              className="p-1.5 rounded-lg hover:bg-slate-700 text-slate-400 hover:text-white transition-colors cursor-pointer border-none bg-transparent"
+              className="p-1.5 rounded-lg transition-colors cursor-pointer border-none bg-transparent"
+              style={{ color: "#FF9FB5" }}
               title="Limpiar año"
             >
               <X size={14} />
@@ -392,15 +386,13 @@ export default function NosotrosPage() {
 
         {/* Filtro por Mes */}
         <div className="flex items-center gap-2">
-          <span className="text-xs text-slate-500 font-semibold uppercase tracking-wider whitespace-nowrap">📅 Mes:</span>
+          <span className="text-xs font-semibold uppercase tracking-wider whitespace-nowrap" style={{ color: "#FF9FB5" }}>📅 Mes:</span>
           <select
             value={filterMes}
             onChange={(e) => setFilterMes(e.target.value)}
-            className="px-3 py-2 rounded-xl text-sm border focus:outline-none transition-all"
+            className="ops-select text-sm"
             style={{
-              background: "#1b1e24",
-              borderColor: filterMes !== "todos" ? "rgba(114,176,29,0.5)" : "rgba(255,255,255,0.05)",
-              color: filterMes !== "todos" ? "#93c947" : "#e2e8f0",
+              borderColor: filterMes !== "todos" ? "#FF5C8A" : "rgba(255,159,181,0.22)",
               fontWeight: filterMes !== "todos" ? 700 : 400,
             }}
           >
@@ -412,7 +404,8 @@ export default function NosotrosPage() {
           {filterMes !== "todos" && (
             <button
               onClick={() => setFilterMes("todos")}
-              className="p-1.5 rounded-lg hover:bg-slate-700 text-slate-400 hover:text-white transition-colors cursor-pointer border-none bg-transparent"
+              className="p-1.5 rounded-lg transition-colors cursor-pointer border-none bg-transparent"
+              style={{ color: "#FF9FB5" }}
               title="Limpiar mes"
             >
               <X size={14} />
@@ -423,8 +416,7 @@ export default function NosotrosPage() {
         {/* Botón Nuevo Registro */}
         <button
           onClick={openNewModal}
-          className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold text-white transition-all shadow-lg hover:shadow-brand-500/10 cursor-pointer border-none"
-          style={{ background: "#1F497D" }}
+          className="btn-primary"
         >
           <Plus size={16} />
           Nuevo Registro
@@ -432,26 +424,26 @@ export default function NosotrosPage() {
       </div>
 
       {/* ── SECCIÓN CENTRAL: TABLA DE DATOS ──────────────────────────────────── */}
-      <div className="rounded-2xl border border-slate-800 overflow-hidden" style={{ background: "#1b1e24" }}>
+      <div className="glass-card overflow-hidden">
         {loading ? (
           <div className="p-16 flex flex-col items-center justify-center gap-3">
-            <Loader2 className="animate-spin text-sky-500" size={28} />
-            <div className="text-sm text-slate-400">Cargando base de datos...</div>
+            <Loader2 className="animate-spin" style={{ color: "#FF5C8A" }} size={28} />
+            <div className="text-sm" style={{ color: "#FF9FB5" }}>Cargando base de datos...</div>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full border-collapse">
               <thead>
-                <tr style={{ background: "rgba(255,255,255,0.02)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-slate-400 uppercase tracking-wider">Fecha</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-slate-400 uppercase tracking-wider">N° Cotización</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-slate-400 uppercase tracking-wider">ATM</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-slate-400 uppercase tracking-wider">Banco</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-slate-400 uppercase tracking-wider">Local</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-slate-400 uppercase tracking-wider">Servicio</th>
-                  <th className="px-6 py-4 text-right text-xs font-bold text-emerald-400 uppercase tracking-wider">Paula</th>
-                  <th className="px-6 py-4 text-center text-xs font-bold text-slate-400 uppercase tracking-wider">Status</th>
-                  <th className="px-6 py-4 text-center text-xs font-bold text-slate-400 uppercase tracking-wider w-24">Acciones</th>
+                <tr style={{ background: "rgba(38,16,27,0.92)", borderBottom: "1px solid rgba(255,159,181,0.16)" }}>
+                  <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-wider" style={{ color: "#FF9FB5" }}>Fecha</th>
+                  <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-wider" style={{ color: "#FF9FB5" }}>N° Cotización</th>
+                  <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-wider" style={{ color: "#FF9FB5" }}>ATM</th>
+                  <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-wider" style={{ color: "#FF9FB5" }}>Banco</th>
+                  <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-wider" style={{ color: "#FF9FB5" }}>Local</th>
+                  <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-wider" style={{ color: "#FF9FB5" }}>Servicio</th>
+                  <th className="px-6 py-4 text-right text-xs font-bold uppercase tracking-wider" style={{ color: "#FF5C8A" }}>Paula</th>
+                  <th className="px-6 py-4 text-center text-xs font-bold uppercase tracking-wider" style={{ color: "#FF9FB5" }}>Status</th>
+                  <th className="px-6 py-4 text-center text-xs font-bold uppercase tracking-wider w-24" style={{ color: "#FF9FB5" }}>Acciones</th>
                 </tr>
               </thead>
               <tbody>

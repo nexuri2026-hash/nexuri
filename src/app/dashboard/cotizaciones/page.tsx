@@ -73,10 +73,10 @@ function fmtCLP(n: number): string {
 }
 
 const ESTADO_STYLE: Record<Cotizacion["estado"], { bg: string; color: string; label: string }> = {
-  borrador:  { bg: "rgba(100,116,139,0.15)", color: "#94a3b8", label: "Borrador" },
-  enviada:   { bg: "rgba(245,158,11,0.15)",  color: "#f59e0b", label: "Enviada" },
-  aprobada:  { bg: "rgba(114,176,29,0.15)",  color: "#72b01d", label: "Aprobada" },
-  rechazada: { bg: "rgba(239,68,68,0.15)",   color: "#ef4444", label: "Rechazada" },
+  borrador:  { bg: "rgba(122,46,64,0.35)",   color: "#FF9FB5", label: "Borrador" },
+  enviada:   { bg: "rgba(255,159,181,0.2)",  color: "#FFE3EC", label: "Enviada" },
+  aprobada:  { bg: "rgba(255,92,138,0.22)",  color: "#FF5C8A", label: "Aprobada" },
+  rechazada: { bg: "rgba(200,29,58,0.25)",   color: "#FF5C8A", label: "Rechazada" },
 };
 
 // Helper to format date as "06 de Agosto 2026"
@@ -658,7 +658,7 @@ export default function CotizacionesPage() {
         </div>
         <button
           onClick={() => { setEditing(null); setShowForm(true); }}
-          style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "10px 20px", background: "linear-gradient(135deg,#72b01d,#578814)", border: "none", color: "white", borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "inherit", boxShadow: "0 4px 16px rgba(114,176,29,0.35)" }}
+          className="btn-primary"
         >
           <Plus size={16} /> Nueva Cotización
         </button>
@@ -667,21 +667,21 @@ export default function CotizacionesPage() {
       {/* KPI Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {[
-          { label: "Total cotizaciones", value: stats.total, color: "#72b01d", icon: FileText },
-          { label: "Enviadas", value: stats.enviadas, color: "#f59e0b", icon: Mail },
-          { label: "Aprobadas", value: stats.aprobadas, color: "#10b981", icon: CheckCircle2 },
-          { label: "Monto aprobado", value: fmtCLP(stats.monto), color: "#3b82f6", icon: Package },
+          { label: "Total cotizaciones", value: stats.total, color: "#FF5C8A", icon: FileText },
+          { label: "Enviadas", value: stats.enviadas, color: "#FF9FB5", icon: Mail },
+          { label: "Aprobadas", value: stats.aprobadas, color: "#FFE3EC", icon: CheckCircle2 },
+          { label: "Monto aprobado", value: fmtCLP(stats.monto), color: "#C81D3A", icon: Package },
         ].map(k => {
           const Icon = k.icon;
           return (
             <div key={k.label} className="stat-card">
               <div className="flex items-start justify-between mb-4">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: `${k.color}18` }}>
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: `${k.color}22`, border: `1px solid ${k.color}40` }}>
                   <Icon size={20} style={{ color: k.color }} />
                 </div>
               </div>
-              <div className="text-2xl font-bold mb-1" style={{ color: "#f1f5f9" }}>{k.value}</div>
-              <div className="text-sm" style={{ color: "#64748b" }}>{k.label}</div>
+              <div className="text-2xl font-bold mb-1" style={{ color: "#FFE3EC" }}>{k.value}</div>
+              <div className="text-sm" style={{ color: "#FF9FB5" }}>{k.label}</div>
             </div>
           );
         })}
@@ -690,35 +690,36 @@ export default function CotizacionesPage() {
       {/* Filters */}
       <div className="glass-card p-4 flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
-          <Search size={14} style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: "#475569" }} />
+          <Search size={14} style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: "#FF9FB5" }} />
           <input
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Buscar por N°, cliente, descripción..."
-            style={{ width: "100%", padding: "8px 12px 8px 34px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)", borderRadius: 8, color: "#f1f5f9", fontSize: 13, fontFamily: "inherit", outline: "none", boxSizing: "border-box" }}
+            className="ops-input pl-9"
           />
         </div>
         <select
           value={filterEstado}
           onChange={e => setFilterEstado(e.target.value)}
-          style={{ padding: "8px 14px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)", borderRadius: 8, color: "#f1f5f9", fontSize: 13, fontFamily: "inherit", cursor: "pointer", minWidth: 150 }}
+          className="ops-select"
+          style={{ minWidth: 150 }}
         >
-          <option value="todos" style={{ color: "#000000", backgroundColor: "#ffffff" }}>Todos los estados</option>
-          <option value="borrador" style={{ color: "#000000", backgroundColor: "#ffffff" }}>Borrador</option>
-          <option value="enviada" style={{ color: "#000000", backgroundColor: "#ffffff" }}>Enviada</option>
-          <option value="aprobada" style={{ color: "#000000", backgroundColor: "#ffffff" }}>Aprobada</option>
-          <option value="rechazada" style={{ color: "#000000", backgroundColor: "#ffffff" }}>Rechazada</option>
+          <option value="todos">Todos los estados</option>
+          <option value="borrador">Borrador</option>
+          <option value="enviada">Enviada</option>
+          <option value="aprobada">Aprobada</option>
+          <option value="rechazada">Rechazada</option>
         </select>
       </div>
 
       {/* List */}
       {loading ? (
-        <div className="glass-card p-12 text-center" style={{ color: "#64748b" }}>Cargando cotizaciones...</div>
+        <div className="glass-card p-12 text-center" style={{ color: "#FF9FB5" }}>Cargando cotizaciones...</div>
       ) : filtered.length === 0 ? (
         <div className="glass-card p-12 text-center">
-          <FileText size={40} style={{ color: "#334155", margin: "0 auto 12px" }} />
-          <div style={{ color: "#94a3b8", fontWeight: 600 }}>No hay cotizaciones</div>
-          <div style={{ color: "#475569", fontSize: 13, marginTop: 4 }}>Crea tu primera cotización con el botón de arriba</div>
+          <FileText size={40} style={{ color: "#FF5C8A", margin: "0 auto 12px" }} />
+          <div style={{ color: "#FFE3EC", fontWeight: 600 }}>No hay cotizaciones</div>
+          <div style={{ color: "#FF9FB5", fontSize: 13, marginTop: 4 }}>Crea tu primera cotización con el botón de arriba</div>
         </div>
       ) : (
         <div className="space-y-3">
@@ -729,25 +730,25 @@ export default function CotizacionesPage() {
               <div key={c.id} className="glass-card p-5">
                 <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                   <div className="flex items-start gap-4 flex-1">
-                    <div style={{ width: 44, height: 44, borderRadius: 12, background: "rgba(114,176,29,0.08)", border: "1px solid rgba(114,176,29,0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                      <FileText size={20} style={{ color: "#72b01d" }} />
+                    <div style={{ width: 44, height: 44, borderRadius: 12, background: "rgba(255,92,138,0.14)", border: "1px solid rgba(255,92,138,0.3)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                      <FileText size={20} style={{ color: "#FF5C8A" }} />
                     </div>
                     <div className="flex-1">
                       <div className="flex flex-wrap items-center gap-2 mb-1">
-                        <span style={{ color: "#f1f5f9", fontWeight: 700, fontSize: 14 }}>N° {c.numero || "Sin número"}</span>
+                        <span style={{ color: "#FFE3EC", fontWeight: 700, fontSize: 14 }}>N° {c.numero || "Sin número"}</span>
                         <span style={{ fontSize: 11, padding: "2px 9px", borderRadius: 20, background: est.bg, color: est.color, fontWeight: 700 }}>{est.label}</span>
                       </div>
-                      <div style={{ color: "#64748b", fontSize: 12, marginBottom: 4 }}>
+                      <div style={{ color: "#FF9FB5", fontSize: 12, marginBottom: 4 }}>
                         <Building2 size={11} style={{ display: "inline", marginRight: 4 }} />{c.cliente || "Sin cliente"}
                         {c.atencion && <> · <User size={11} style={{ display: "inline", marginRight: 4 }} />{c.atencion}</>}
                       </div>
                       {c.descripcionServicio && (
-                        <div style={{ color: "#94a3b8", fontSize: 12, maxWidth: 500 }}>{c.descripcionServicio.slice(0, 120)}{c.descripcionServicio.length > 120 ? "…" : ""}</div>
+                        <div style={{ color: "rgba(255,227,236,0.8)", fontSize: 12, maxWidth: 500 }}>{c.descripcionServicio.slice(0, 120)}{c.descripcionServicio.length > 120 ? "…" : ""}</div>
                       )}
                       <div className="flex flex-wrap gap-4 mt-2">
-                        <span style={{ color: "#475569", fontSize: 11 }}><Calendar size={10} style={{ display: "inline", marginRight: 3 }} />{c.fecha}</span>
-                        <span style={{ color: "#72b01d", fontSize: 12, fontWeight: 700 }}>{fmtCLP(bruto)}</span>
-                        <span style={{ color: "#475569", fontSize: 11 }}>{c.items.length} ítem{c.items.length !== 1 ? "s" : ""}</span>
+                        <span style={{ color: "#FF9FB5", opacity: 0.75, fontSize: 11 }}><Calendar size={10} style={{ display: "inline", marginRight: 3 }} />{c.fecha}</span>
+                        <span style={{ color: "#FF5C8A", fontSize: 12, fontWeight: 700 }}>{fmtCLP(bruto)}</span>
+                        <span style={{ color: "#FF9FB5", opacity: 0.75, fontSize: 11 }}>{c.items.length} ítem{c.items.length !== 1 ? "s" : ""}</span>
                       </div>
                     </div>
                   </div>
@@ -756,28 +757,28 @@ export default function CotizacionesPage() {
                     <button
                       onClick={() => setPreviewing(c)}
                       title="Ver e Imprimir"
-                      style={{ display: "inline-flex", alignItems: "center", gap: 5, padding: "7px 13px", background: "rgba(114,176,29,0.1)", border: "1px solid rgba(114,176,29,0.2)", color: "#72b01d", borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "inherit" }}
+                      style={{ display: "inline-flex", alignItems: "center", gap: 5, padding: "7px 13px", background: "rgba(255,92,138,0.16)", border: "1px solid rgba(255,92,138,0.35)", color: "#FFE3EC", borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "inherit" }}
                     >
-                      <Eye size={13} /> Ver PDF
+                      <Eye size={13} style={{ color: "#FF5C8A" }} /> Ver PDF
                     </button>
                     <button
                       onClick={() => handleDownloadWord(c)}
                       title="Descargar Word"
-                      style={{ display: "inline-flex", alignItems: "center", gap: 5, padding: "7px 13px", background: "rgba(43,87,154,0.15)", border: "1px solid rgba(43,87,154,0.3)", color: "#60a5fa", borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "inherit" }}
+                      style={{ display: "inline-flex", alignItems: "center", gap: 5, padding: "7px 13px", background: "rgba(122,46,64,0.45)", border: "1px solid rgba(255,159,181,0.3)", color: "#FF9FB5", borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "inherit" }}
                     >
                       <FileText size={13} /> Word
                     </button>
                     <button
                       onClick={() => { setEditing(c); setShowForm(true); }}
                       title="Editar"
-                      style={{ padding: "7px 10px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "#94a3b8", borderRadius: 8, cursor: "pointer" }}
+                      style={{ padding: "7px 10px", background: "rgba(255,227,236,0.06)", border: "1px solid rgba(255,159,181,0.2)", color: "#FFE3EC", borderRadius: 8, cursor: "pointer" }}
                     >
                       <Edit2 size={13} />
                     </button>
                     <button
                       onClick={() => setConfirmDelete(c)}
                       title="Eliminar"
-                      style={{ padding: "7px 10px", background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.15)", color: "#f87171", borderRadius: 8, cursor: "pointer" }}
+                      style={{ padding: "7px 10px", background: "rgba(200,29,58,0.2)", border: "1px solid rgba(200,29,58,0.4)", color: "#FF5C8A", borderRadius: 8, cursor: "pointer" }}
                     >
                       <Trash2 size={13} />
                     </button>

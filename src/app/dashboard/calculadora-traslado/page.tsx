@@ -184,14 +184,14 @@ export default function CalculadoraTrasladoPage() {
     // Glowing Neon Markers
     const customIcon = L.divIcon({
       className: 'custom-div-icon',
-      html: `<div style="background-color: #72b01d; width: 14px; height: 14px; border-radius: 50%; border: 2.5px solid white; box-shadow: 0 0 10px #72b01d; animation: pulse 2s infinite;"></div>`,
+      html: `<div style="background-color: #FF5C8A; width: 14px; height: 14px; border-radius: 50%; border: 2.5px solid #FFE3EC; box-shadow: 0 0 10px #FF5C8A; animation: pulse 2s infinite;"></div>`,
       iconSize: [14, 14],
       iconAnchor: [7, 7]
     });
 
     const destIcon = L.divIcon({
       className: 'custom-div-icon',
-      html: `<div style="background-color: #a78bfa; width: 14px; height: 14px; border-radius: 50%; border: 2.5px solid white; box-shadow: 0 0 10px #a78bfa; animation: pulse 2s infinite;"></div>`,
+      html: `<div style="background-color: #C81D3A; width: 14px; height: 14px; border-radius: 50%; border: 2.5px solid #FFE3EC; box-shadow: 0 0 10px #C81D3A; animation: pulse 2s infinite;"></div>`,
       iconSize: [14, 14],
       iconAnchor: [7, 7]
     });
@@ -215,9 +215,9 @@ export default function CalculadoraTrasladoPage() {
 
     if (routePath && routePath.length > 0) {
       const line = L.polyline(routePath, {
-        color: '#3b82f6',
+        color: '#FF5C8A',
         weight: 6,
-        opacity: 0.85
+        opacity: 0.9
       }).addTo(map);
 
       const midIndex = Math.floor(routePath.length / 2);
@@ -233,9 +233,9 @@ export default function CalculadoraTrasladoPage() {
         })
         .setLatLng(midPoint)
         .setContent(`
-          <div style="background-color: #1e293b; color: #f1f5f9; padding: 6px 12px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.5); font-weight: 700; font-size: 11px; text-align: center; border: 1px solid rgba(255,255,255,0.08); display: flex; flex-direction: column; gap: 2px; min-width: 90px;">
-            <div style="color: #93c947; font-size: 12px;">🚗 ${km} Km</div>
-            <div style="color: #94a3b8; font-weight: 500; font-size: 10px;">⏱️ ${routeDuration}</div>
+          <div style="background-color: #23101a; color: #FFE3EC; padding: 6px 12px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.6); font-weight: 700; font-size: 11px; text-align: center; border: 1px solid rgba(255,159,181,0.3); display: flex; flex-direction: column; gap: 2px; min-width: 90px;">
+            <div style="color: #FF5C8A; font-size: 12px;">🚗 ${km} Km</div>
+            <div style="color: #FF9FB5; font-weight: 500; font-size: 10px;">⏱️ ${routeDuration}</div>
           </div>
         `)
         .addTo(map);
@@ -249,9 +249,9 @@ export default function CalculadoraTrasladoPage() {
       ];
       
       const line = L.polyline(points, {
-        color: '#93c947',
+        color: '#FF5C8A',
         weight: 3,
-        opacity: 0.8,
+        opacity: 0.85,
         dashArray: '6, 6'
       }).addTo(map);
 
@@ -378,24 +378,24 @@ Total a Pagar: ${formatCurrency(tot)}
         <div className="lg:col-span-2 space-y-6">
           <div className="glass-card p-6 space-y-6 relative overflow-hidden">
             {/* Background design glow */}
-            <div className="absolute -right-24 -top-24 w-48 h-48 rounded-full blur-[100px]" style={{ background: "rgba(114,176,29,0.15)" }} />
+            <div className="absolute -right-24 -top-24 w-48 h-48 rounded-full blur-[100px]" style={{ background: "rgba(255,92,138,0.22)" }} />
 
-            <div className="flex items-center gap-2 pb-4" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-              <Calculator className="text-[#93c947]" size={20} />
-              <h3 className="text-md font-bold text-slate-100">Nueva Cotización</h3>
+            <div className="flex items-center gap-2 pb-4" style={{ borderBottom: "1px solid rgba(255,159,181,0.16)" }}>
+              <Calculator className="text-[#FF5C8A]" size={20} />
+              <h3 className="text-md font-bold" style={{ color: "#FFE3EC" }}>Nueva Cotización</h3>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Origen */}
-              <div className="space-y-4 p-4 rounded-xl" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.03)" }}>
-                <div className="flex items-center gap-2 text-xs font-bold text-[#93c947] tracking-wider uppercase">
+              <div className="space-y-4 p-4 rounded-xl" style={{ background: "rgba(255,92,138,0.05)", border: "1px solid rgba(255,159,181,0.14)" }}>
+                <div className="flex items-center gap-2 text-xs font-bold text-[#FF5C8A] tracking-wider uppercase">
                   <MapPin size={14} />
                   <span>Punto de Origen (Ida)</span>
                 </div>
                 
                 <div className="space-y-3">
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[11px] font-bold text-slate-400 uppercase pl-1">Región</label>
+                    <label className="text-[11px] font-bold uppercase pl-1" style={{ color: "#FF9FB5" }}>Región</label>
                     <select className="ops-select text-sm w-full" value={regionIda} onChange={handleRegionIdaChange}>
                       <option value="">Selecciona región...</option>
                       {CHILE_REGIONS.map(r => (
@@ -405,7 +405,7 @@ Total a Pagar: ${formatCurrency(tot)}
                   </div>
 
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[11px] font-bold text-slate-400 uppercase pl-1">Comuna</label>
+                    <label className="text-[11px] font-bold uppercase pl-1" style={{ color: "#FF9FB5" }}>Comuna</label>
                     <select className="ops-select text-sm w-full" value={comunaIda} onChange={(e) => setComunaIda(e.target.value)} disabled={!regionIda}>
                       <option value="">Selecciona comuna...</option>
                       {comunasIdaList.map(c => (
@@ -417,15 +417,15 @@ Total a Pagar: ${formatCurrency(tot)}
               </div>
 
               {/* Destino */}
-              <div className="space-y-4 p-4 rounded-xl" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.03)" }}>
-                <div className="flex items-center gap-2 text-xs font-bold text-[#a78bfa] tracking-wider uppercase">
+              <div className="space-y-4 p-4 rounded-xl" style={{ background: "rgba(200,29,58,0.08)", border: "1px solid rgba(255,159,181,0.14)" }}>
+                <div className="flex items-center gap-2 text-xs font-bold text-[#FF9FB5] tracking-wider uppercase">
                   <MapPin size={14} />
                   <span>Punto de Destino (Vuelta)</span>
                 </div>
 
                 <div className="space-y-3">
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[11px] font-bold text-slate-400 uppercase pl-1">Región</label>
+                    <label className="text-[11px] font-bold uppercase pl-1" style={{ color: "#FF9FB5" }}>Región</label>
                     <select className="ops-select text-sm w-full" value={regionVuelta} onChange={handleRegionVueltaChange}>
                       <option value="">Selecciona región...</option>
                       {CHILE_REGIONS.map(r => (
@@ -435,7 +435,7 @@ Total a Pagar: ${formatCurrency(tot)}
                   </div>
 
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[11px] font-bold text-slate-400 uppercase pl-1">Comuna</label>
+                    <label className="text-[11px] font-bold uppercase pl-1" style={{ color: "#FF9FB5" }}>Comuna</label>
                     <select className="ops-select text-sm w-full" value={comunaVuelta} onChange={(e) => setComunaVuelta(e.target.value)} disabled={!regionVuelta}>
                       <option value="">Selecciona comuna...</option>
                       {comunasVueltaList.map(c => (
@@ -531,12 +531,12 @@ Total a Pagar: ${formatCurrency(tot)}
                 <span className="text-slate-200 font-bold">$200 / Km</span>
               </div>
 
-              <div className="pt-6 mt-4" style={{ borderTop: "1px dashed rgba(255,255,255,0.1)" }}>
-                <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Total Cotizado</div>
-                <div className="text-3xl font-extrabold text-[#93c947]">
+              <div className="pt-6 mt-4" style={{ borderTop: "1px dashed rgba(255,159,181,0.22)" }}>
+                <div className="text-xs font-semibold uppercase tracking-wider mb-1" style={{ color: "#FF9FB5" }}>Total Cotizado</div>
+                <div className="text-3xl font-extrabold" style={{ color: "#FF5C8A" }}>
                   {formatCurrency(total)}
                 </div>
-                <div className="text-[10px] text-slate-500 mt-1">
+                <div className="text-[10px] mt-1" style={{ color: "#FF9FB5", opacity: 0.7 }}>
                   Cálculo realizado: {kmValue} Km × $200/Km × 2 (Ida/Vuelta)
                 </div>
               </div>

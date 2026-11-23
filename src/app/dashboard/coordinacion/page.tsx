@@ -34,23 +34,23 @@ interface ProgramacionRow {
 const ROWS_PER_PAGE = 25;
 
 const BADGE_COLORS: Record<string, { bg: string; color: string }> = {
-  SI:  { bg: "rgba(114,176,29,0.12)", color: "#93c947" },
-  NO:  { bg: "rgba(239,68,68,0.12)",  color: "#f87171" },
-  "N/A": { bg: "rgba(148,163,184,0.12)", color: "#94a3b8" },
-  "": { bg: "rgba(100,116,139,0.12)", color: "#64748b" },
+  SI:  { bg: "rgba(255,92,138,0.18)", color: "#FF9FB5" },
+  NO:  { bg: "rgba(200,29,58,0.22)",  color: "#FF5C8A" },
+  "N/A": { bg: "rgba(122,46,64,0.3)", color: "#FFE3EC" },
+  "": { bg: "rgba(122,46,64,0.2)", color: "#FF9FB5" },
 };
 
 const TIPO_COLOR = (tipo: string) => {
   const t = tipo?.toLowerCase() || "";
-  if (t.includes("pintura") || t.includes("pintar")) return { bg: "rgba(234,179,8,0.12)", color: "#facc15" };
-  if (t.includes("camara") || t.includes("cámara") || t.includes("cctv") || t.includes("dvr")) return { bg: "rgba(14,165,233,0.12)", color: "#38bdf8" };
-  if (t.includes("cerrajeria") || t.includes("cerrajería") || t.includes("cerrajero") || t.includes("chapa")) return { bg: "rgba(236,72,153,0.12)", color: "#ec4899" };
-  if (t.includes("llave") || t.includes("lave")) return { bg: "rgba(168,85,247,0.12)", color: "#c084fc" };
-  if (t.includes("instalacion") || t.includes("anclaje")) return { bg: "rgba(59,130,246,0.12)", color: "#60a5fa" };
-  if (t.includes("supervision") || t.includes("supervisión")) return { bg: "rgba(245,158,11,0.12)", color: "#fbbf24" };
-  if (t.includes("servicio") || t.includes("mantencion") || t.includes("mantención")) return { bg: "rgba(114,176,29,0.12)", color: "#93c947" };
-  if (t.includes("visita")) return { bg: "rgba(139,92,246,0.12)", color: "#a78bfa" };
-  return { bg: "rgba(100,116,139,0.1)", color: "#94a3b8" };
+  if (t.includes("pintura") || t.includes("pintar")) return { bg: "rgba(255,159,181,0.18)", color: "#FFE3EC" };
+  if (t.includes("camara") || t.includes("cámara") || t.includes("cctv") || t.includes("dvr")) return { bg: "rgba(255,92,138,0.2)", color: "#FF9FB5" };
+  if (t.includes("cerrajeria") || t.includes("cerrajería") || t.includes("cerrajero") || t.includes("chapa")) return { bg: "rgba(200,29,58,0.25)", color: "#FF5C8A" };
+  if (t.includes("llave") || t.includes("lave")) return { bg: "rgba(122,46,64,0.4)", color: "#FFE3EC" };
+  if (t.includes("instalacion") || t.includes("anclaje")) return { bg: "rgba(255,92,138,0.16)", color: "#FF9FB5" };
+  if (t.includes("supervision") || t.includes("supervisión")) return { bg: "rgba(200,29,58,0.2)", color: "#FF9FB5" };
+  if (t.includes("servicio") || t.includes("mantencion") || t.includes("mantención")) return { bg: "rgba(255,92,138,0.18)", color: "#FFE3EC" };
+  if (t.includes("visita")) return { bg: "rgba(122,46,64,0.35)", color: "#FF9FB5" };
+  return { bg: "rgba(122,46,64,0.25)", color: "#FF9FB5" };
 };
 
 function CoordinacionContent() {
@@ -495,12 +495,12 @@ function CoordinacionContent() {
           <button
             onClick={downloadExcel}
             className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"
-            style={{ background: "rgba(34,197,94,0.1)", color: "#4ade80", border: "1px solid rgba(34,197,94,0.2)" }}
+            style={{ background: "rgba(122,46,64,0.38)", color: "#FFE3EC", border: "1px solid rgba(255,159,181,0.3)" }}
           >
-            <Download size={14} />
+            <Download size={14} style={{ color: "#FF9FB5" }} />
             Exportar Excel
           </button>
-          <div className="px-3 py-1.5 rounded-lg text-xs font-semibold" style={{ background: "rgba(114,176,29,0.1)", color: "#72b01d", border: "1px solid rgba(114,176,29,0.2)" }}>
+          <div className="px-3 py-1.5 rounded-lg text-xs font-semibold" style={{ background: "rgba(255,92,138,0.15)", color: "#FF9FB5", border: "1px solid rgba(255,92,138,0.3)" }}>
             {data.length} registros totales
           </div>
           <button
@@ -598,7 +598,7 @@ function CoordinacionContent() {
         <div className="overflow-x-auto">
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
             <thead>
-              <tr style={{ background: "rgba(27,30,36,0.9)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+              <tr style={{ background: "rgba(38,16,27,0.92)", borderBottom: "1px solid rgba(255,159,181,0.16)" }}>
                 {(() => {
                   const headers = [
                     { label: "OT", icon: Hash },
@@ -629,7 +629,7 @@ function CoordinacionContent() {
                       style={{
                         padding: "12px 14px",
                         textAlign: "left",
-                        color: "#64748b",
+                        color: "#FF9FB5",
                         fontSize: 11,
                         fontWeight: 700,
                         letterSpacing: "0.06em",
@@ -649,13 +649,13 @@ function CoordinacionContent() {
             <tbody>
               {loading ? (
                 <tr>
-                  <td colSpan={16} style={{ textAlign: "center", padding: 40, color: "#475569" }}>
+                  <td colSpan={16} style={{ textAlign: "center", padding: 40, color: "#FF9FB5" }}>
                     Conectando con Supabase...
                   </td>
                 </tr>
               ) : paginated.length === 0 ? (
                 <tr>
-                  <td colSpan={16} style={{ textAlign: "center", padding: 40, color: "#475569" }}>
+                  <td colSpan={16} style={{ textAlign: "center", padding: 40, color: "#FF9FB5" }}>
                     No se encontraron registros
                   </td>
                 </tr>
@@ -669,23 +669,23 @@ function CoordinacionContent() {
                       key={row.id}
                       onClick={() => handleOpenEdit(row)}
                       style={{
-                        borderBottom: "1px solid rgba(255,255,255,0.04)",
+                        borderBottom: "1px solid rgba(255,159,181,0.08)",
                         cursor: "pointer",
                         transition: "background 0.12s",
                       }}
-                      onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(114,176,29,0.04)")}
+                      onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255,92,138,0.08)")}
                       onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                       title="Haz clic para editar este registro"
                     >
                       {/* OT */}
                       <td style={{ padding: "10px 14px", whiteSpace: "nowrap" }}>
-                        <span style={{ fontWeight: 700, color: "#72b01d", fontSize: 12 }}>
+                        <span style={{ fontWeight: 700, color: "#FF5C8A", fontSize: 12 }}>
                           {row.ot || "—"}
                         </span>
                       </td>
                       {/* N° Cotización */}
                       <td style={{ padding: "10px 14px", whiteSpace: "nowrap" }}>
-                        <span style={{ fontWeight: 600, color: "#38bdf8", fontSize: 12, fontFamily: "monospace" }}>
+                        <span style={{ fontWeight: 600, color: "#FF9FB5", fontSize: 12, fontFamily: "monospace" }}>
                           {row.numero_cotizacion || "—"}
                         </span>
                       </td>
@@ -800,9 +800,9 @@ function CoordinacionContent() {
                           <button
                             onClick={(e) => { e.stopPropagation(); handleOpenEdit(row); }}
                             style={{
-                              background: "rgba(114,176,29,0.1)",
-                              color: "#72b01d",
-                              border: "1px solid rgba(114,176,29,0.2)",
+                              background: "rgba(255,92,138,0.16)",
+                              color: "#FFE3EC",
+                              border: "1px solid rgba(255,92,138,0.35)",
                               borderRadius: "6px",
                               padding: "4px 8px",
                               cursor: "pointer",
@@ -813,14 +813,14 @@ function CoordinacionContent() {
                               fontWeight: 600,
                             }}
                           >
-                            <Pencil size={12} /> Editar
+                            <Pencil size={12} style={{ color: "#FF5C8A" }} /> Editar
                           </button>
                           <button
                             onClick={(e) => handleDuplicate(e, row)}
                             style={{
-                              background: "rgba(56,189,248,0.1)",
-                              color: "#38bdf8",
-                              border: "1px solid rgba(56,189,248,0.25)",
+                              background: "rgba(122,46,64,0.4)",
+                              color: "#FF9FB5",
+                              border: "1px solid rgba(255,159,181,0.3)",
                               borderRadius: "6px",
                               padding: "4px 8px",
                               cursor: "pointer",
@@ -837,9 +837,9 @@ function CoordinacionContent() {
                           <button
                             onClick={(e) => handleDelete(e, row.id)}
                             style={{
-                              background: "rgba(239,68,68,0.1)",
-                              color: "#ef4444",
-                              border: "1px solid rgba(239,68,68,0.2)",
+                              background: "rgba(200,29,58,0.2)",
+                              color: "#FF5C8A",
+                              border: "1px solid rgba(200,29,58,0.4)",
                               borderRadius: "6px",
                               padding: "4px 8px",
                               cursor: "pointer",
@@ -943,19 +943,19 @@ function CoordinacionContent() {
         >
           <div
             className="w-full max-w-2xl rounded-2xl overflow-hidden flex flex-col max-h-[90vh]"
-            style={{ background: "#1b1e24", border: "1px solid rgba(255,255,255,0.08)" }}
+            style={{ background: "#23101a", border: "1px solid rgba(255,159,181,0.25)" }}
           >
             {/* Modal header */}
-            <div className="flex items-center justify-between p-5 shrink-0" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+            <div className="flex items-center justify-between p-5 shrink-0" style={{ borderBottom: "1px solid rgba(255,159,181,0.15)" }}>
               <div>
-                <div style={{ color: "#f1f5f9", fontSize: 16, fontWeight: 700 }}>
+                <div style={{ color: "#FFE3EC", fontSize: 16, fontWeight: 700 }}>
                   {editingRow ? `Editar Coordinación #${editingRow.ot || editingRow.id}` : formData.atm ? `Duplicar Coordinación (ATM ${formData.atm})` : "Nueva Coordinación"}
                 </div>
-                <div style={{ color: "#475569", fontSize: 12, marginTop: 2 }}>
+                <div style={{ color: "#FF9FB5", opacity: 0.75, fontSize: 12, marginTop: 2 }}>
                   {editingRow ? "Modifica los campos del registro seleccionado." : formData.atm ? "Revisa o ajusta los datos copiados y haz clic en Guardar para crear el nuevo servicio." : "Ingresa los datos para el nuevo registro."}
                 </div>
               </div>
-              <button onClick={() => setIsModalOpen(false)} style={{ background: "none", border: "none", cursor: "pointer", color: "#475569" }}>
+              <button onClick={() => setIsModalOpen(false)} style={{ background: "none", border: "none", cursor: "pointer", color: "#FF9FB5" }}>
                 <X size={20} />
               </button>
             </div>

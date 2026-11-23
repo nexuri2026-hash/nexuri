@@ -184,34 +184,34 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     : 'Operaria';
 
   return (
-    <div className="flex h-screen overflow-hidden" style={{ background: "#121418" }}>
+    <div className="flex h-screen overflow-hidden" style={{ background: "linear-gradient(135deg, #150b10 0%, #1e0f17 50%, #2a131e 100%)" }}>
 
       {/* ── Modal de inactividad ───────────────────────────────────────────── */}
       {showInactivityWarning && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center" style={{ background: "rgba(0,0,0,0.75)", backdropFilter: "blur(6px)" }}>
-          <div className="flex flex-col items-center gap-5 p-8 rounded-2xl text-center" style={{ background: "#1b1e24", border: "1px solid rgba(245,158,11,0.3)", maxWidth: 380, boxShadow: "0 24px 60px rgba(0,0,0,0.7)" }}>
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center" style={{ background: "rgba(15,5,10,0.8)", backdropFilter: "blur(6px)" }}>
+          <div className="flex flex-col items-center gap-5 p-8 rounded-2xl text-center" style={{ background: "#24111b", border: "1px solid rgba(255,92,138,0.35)", maxWidth: 380, boxShadow: "0 24px 60px rgba(0,0,0,0.7)" }}>
             <div className="text-4xl">⚠️</div>
             <div>
-              <div className="font-bold text-lg mb-1" style={{ color: "#f1f5f9" }}>Sesión por vencer</div>
-              <div className="text-sm" style={{ color: "#94a3b8" }}>
+              <div className="font-bold text-lg mb-1" style={{ color: "#FFE3EC" }}>Sesión por vencer</div>
+              <div className="text-sm" style={{ color: "#FF9FB5" }}>
                 Tu sesión se cerrará automáticamente por inactividad en:
               </div>
             </div>
-            <div className="text-5xl font-bold tabular-nums" style={{ color: "#f59e0b" }}>
+            <div className="text-5xl font-bold tabular-nums" style={{ color: "#FF5C8A" }}>
               {String(Math.floor(inactivityCountdown / 60)).padStart(2, "0")}:{String(inactivityCountdown % 60).padStart(2, "0")}
             </div>
             <div className="flex gap-3 w-full">
               <button
                 onClick={handleLogout}
                 className="flex-1 py-2 rounded-lg text-sm font-semibold"
-                style={{ background: "rgba(239,68,68,0.12)", color: "#f87171", border: "1px solid rgba(239,68,68,0.2)" }}
+                style={{ background: "rgba(122,46,64,0.35)", color: "#FF9FB5", border: "1px solid rgba(255,159,181,0.25)" }}
               >
                 Cerrar sesión
               </button>
               <button
                 onClick={() => { setShowInactivityWarning(false); }}
                 className="flex-1 py-2 rounded-lg text-sm font-semibold"
-                style={{ background: "#72b01d", color: "#fff" }}
+                style={{ background: "linear-gradient(135deg, #C81D3A, #FF5C8A)", color: "#fff" }}
               >
                 Seguir conectado
               </button>
@@ -224,7 +224,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       {sidebarOpen && (
         <div
           className="fixed inset-0 z-40 lg:hidden"
-          style={{ background: "rgba(0,0,0,0.6)", backdropFilter: "blur(2px)" }}
+          style={{ background: "rgba(15,5,10,0.7)", backdropFilter: "blur(3px)" }}
           onClick={() => setSidebarOpen(false)}
         />
       )}
@@ -232,33 +232,33 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       {/* Sidebar */}
       <aside
         className={`fixed lg:relative z-50 lg:z-auto flex flex-col h-full transition-transform duration-300 ${sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}
-        style={{ width: "240px", background: "linear-gradient(180deg, #1b1e24 0%, #121418 100%)", borderRight: "1px solid rgba(255,255,255,0.05)", flexShrink: 0 }}
+        style={{ width: "240px", background: "linear-gradient(180deg, #27111c 0%, #180c12 100%)", borderRight: "1px solid rgba(255,159,181,0.15)", flexShrink: 0 }}
       >
         {/* Logo */}
-        <div className="flex items-center justify-between p-4" style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+        <div className="flex items-center justify-between p-4" style={{ borderBottom: "1px solid rgba(255,159,181,0.12)" }}>
           <Link href="/dashboard" className="flex items-center gap-3">
             {CONFIG.USE_IMAGE_LOGO ? (
-              <img src={CONFIG.LOGO_PATH} alt={`${CONFIG.SYSTEM_NAME} Logo`} style={{ height: "36px", width: "auto", objectFit: "contain", borderRadius: "4px" }} />
+              <img src={CONFIG.LOGO_PATH} alt={`${CONFIG.SYSTEM_NAME} Logo`} style={{ height: "36px", width: "auto", objectFit: "contain", borderRadius: "6px", border: "1px solid rgba(255,227,236,0.2)" }} />
             ) : (
               <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-brand-500/10 border border-brand-500/20 text-brand-500">
                 <Key size={16} />
               </div>
             )}
             <div>
-              <div className="font-bold text-sm" style={{ color: "#f1f5f9" }}>{CONFIG.SYSTEM_NAME}</div>
-              <div className="text-[10px] font-semibold text-brand-500">{CONFIG.SYSTEM_VERSION}</div>
+              <div className="font-bold text-sm" style={{ color: "#FFE3EC" }}>{CONFIG.SYSTEM_NAME}</div>
+              <div className="text-[10px] font-semibold" style={{ color: "#FF5C8A" }}>{CONFIG.SYSTEM_VERSION}</div>
             </div>
           </Link>
-          <button className="lg:hidden" onClick={() => setSidebarOpen(false)} style={{ color: "#64748b", background: "none", border: "none", cursor: "pointer" }}>
+          <button className="lg:hidden" onClick={() => setSidebarOpen(false)} style={{ color: "#FF9FB5", background: "none", border: "none", cursor: "pointer" }}>
             <X size={18} />
           </button>
         </div>
 
         {/* Live status */}
-        <div className="mx-4 mt-4 p-3 rounded-lg flex items-center gap-2" style={{ background: "rgba(62,207,142,0.08)", border: "1px solid rgba(62,207,142,0.15)" }}>
-          <div className="w-2 h-2 rounded-full bg-brand-500 pulse-live" style={{ color: "var(--color-brand-500)" }} />
-          <span style={{ color: "var(--color-brand-400)", fontSize: "11px", fontWeight: 600 }}>SISTEMA EN LÍNEA</span>
-          <Zap size={11} style={{ color: "var(--color-brand-500)", marginLeft: "auto" }} />
+        <div className="mx-4 mt-4 p-3 rounded-lg flex items-center gap-2" style={{ background: "linear-gradient(90deg, rgba(200,29,58,0.22) 0%, rgba(255,92,138,0.12) 100%)", border: "1px solid rgba(255,92,138,0.3)" }}>
+          <div className="w-2 h-2 rounded-full pulse-live" style={{ background: "#FF5C8A", color: "#FF5C8A" }} />
+          <span style={{ color: "#FFE3EC", fontSize: "11px", fontWeight: 700, letterSpacing: "0.04em" }}>SISTEMA EN LÍNEA</span>
+          <Zap size={11} style={{ color: "#FF5C8A", marginLeft: "auto" }} />
         </div>
 
         {/* Navigation */}
@@ -334,16 +334,16 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </nav>
 
         {/* User info */}
-        <div className="p-4" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+        <div className="p-4" style={{ borderTop: "1px solid rgba(255,159,181,0.12)" }}>
           <div className="flex items-center gap-3">
             <div className="tech-avatar w-9 h-9 text-sm">
               {initiales}
             </div>
             <div className="flex-1 min-w-0">
-              <div className="text-sm font-semibold truncate" style={{ color: "#e2e8f0" }}>{profile?.nombre ?? "Cargando..."}</div>
-              <div className="text-xs truncate" style={{ color: "#475569" }}>{rolLabel}</div>
+              <div className="text-sm font-semibold truncate" style={{ color: "#FFE3EC" }}>{profile?.nombre ?? "Cargando..."}</div>
+              <div className="text-xs truncate" style={{ color: "#FF9FB5" }}>{rolLabel}</div>
             </div>
-            <button onClick={handleLogout} title="Cerrar sesión" style={{ color: "#475569", background: "none", border: "none", cursor: "pointer", padding: "4px" }}>
+            <button onClick={handleLogout} title="Cerrar sesión" style={{ color: "#FF9FB5", background: "none", border: "none", cursor: "pointer", padding: "4px" }}>
               <LogOut size={16} />
             </button>
           </div>
@@ -353,44 +353,41 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       {/* Main content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Topbar */}
-        <header className="flex items-center justify-between px-6 py-3 flex-shrink-0 relative z-50" style={{ background: "rgba(27,30,36,0.95)", borderBottom: "1px solid rgba(255,255,255,0.05)", backdropFilter: "blur(8px)" }}>
+        <header className="flex items-center justify-between px-6 py-3 flex-shrink-0 relative z-50" style={{ background: "rgba(33,15,24,0.92)", borderBottom: "1px solid rgba(255,159,181,0.14)", backdropFilter: "blur(10px)" }}>
           <div className="flex items-center gap-4">
-            <button className="lg:hidden" onClick={() => setSidebarOpen(true)} style={{ color: "#64748b", background: "none", border: "none", cursor: "pointer" }}>
+            <button className="lg:hidden" onClick={() => setSidebarOpen(true)} style={{ color: "#FF9FB5", background: "none", border: "none", cursor: "pointer" }}>
               <Menu size={20} />
             </button>
             <div>
-              <h1 className="font-bold text-base" style={{ color: "#f1f5f9" }}>{currentPage?.label ?? "Dashboard"}</h1>
-              <p style={{ color: "#475569", fontSize: "12px" }}>
+              <h1 className="font-bold text-base" style={{ color: "#FFE3EC" }}>{currentPage?.label ?? "Dashboard"}</h1>
+              <p style={{ color: "#FF9FB5", opacity: 0.75, fontSize: "12px" }}>
                 {new Date().toLocaleDateString("es-CL", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
               </p>
             </div>
           </div>
 
           <div className="flex items-center gap-3">
-            {/* Search removed to avoid confusion with page-specific search bars */}
-
-
             {/* Notifications */}
             <div className="relative">
               <button
                 id="notif-btn"
                 onClick={() => setNotifOpen(!notifOpen)}
                 className="relative flex items-center justify-center w-9 h-9 rounded-lg"
-                style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)", cursor: "pointer", color: "#94a3b8" }}
+                style={{ background: "rgba(255,92,138,0.1)", border: "1px solid rgba(255,159,181,0.2)", cursor: "pointer", color: "#FFE3EC" }}
               >
                 <Bell size={16} />
                 {unreadCount > 0 && <span className="notif-badge">{unreadCount}</span>}
               </button>
 
               {notifOpen && (
-                <div className="absolute right-0 top-12 w-80 rounded-xl shadow-2xl z-50 overflow-hidden" style={{ background: "#1b1e24", border: "1px solid rgba(255,255,255,0.08)" }}>
-                  <div className="p-4 border-b flex justify-between items-center" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
-                    <div className="font-semibold text-sm" style={{ color: "#f1f5f9" }}>Notificaciones</div>
+                <div className="absolute right-0 top-12 w-80 rounded-xl shadow-2xl z-50 overflow-hidden" style={{ background: "#23101a", border: "1px solid rgba(255,159,181,0.22)" }}>
+                  <div className="p-4 border-b flex justify-between items-center" style={{ borderColor: "rgba(255,159,181,0.15)" }}>
+                    <div className="font-semibold text-sm" style={{ color: "#FFE3EC" }}>Notificaciones</div>
                     {unreadCount > 0 && (
                       <button
                         onClick={markAllAsRead}
                         className="text-xs"
-                        style={{ color: "var(--color-brand-500)", background: "none", border: "none", cursor: "pointer" }}
+                        style={{ color: "#FF5C8A", background: "none", border: "none", cursor: "pointer" }}
                       >
                         Marcar todas leídas
                       </button>
@@ -402,15 +399,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                         key={n.id}
                         onClick={() => markAsRead(n.id)}
                         className={`p-3 cursor-pointer transition-colors ${n.unread ? "bg-white/5 hover:bg-white/10" : "hover:bg-white/5"}`}
-                        style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}
+                        style={{ borderBottom: "1px solid rgba(255,159,181,0.08)" }}
                       >
                         <div className="flex items-start gap-3">
-                          <Circle size={8} style={{ color: n.unread ? n.color : "#475569", flexShrink: 0, marginTop: 5 }} fill={n.unread ? n.color : "transparent"} />
+                          <Circle size={8} style={{ color: n.unread ? "#FF5C8A" : "#7A2E40", flexShrink: 0, marginTop: 5 }} fill={n.unread ? "#FF5C8A" : "transparent"} />
                           <div className={n.unread ? "opacity-100" : "opacity-60"}>
-                            <div className="text-xs font-semibold" style={{ color: "#e2e8f0" }}>{n.title}</div>
-                            <div className="text-xs" style={{ color: "#475569" }}>{n.sub}</div>
+                            <div className="text-xs font-semibold" style={{ color: "#FFE3EC" }}>{n.title}</div>
+                            <div className="text-xs" style={{ color: "#FF9FB5" }}>{n.sub}</div>
                           </div>
-                          <span className={`text-[10px] ml-auto flex-shrink-0 ${n.unread ? "font-bold" : ""}`} style={{ color: n.unread ? "#94a3b8" : "#334155" }}>{n.time}</span>
+                          <span className={`text-[10px] ml-auto flex-shrink-0 ${n.unread ? "font-bold" : ""}`} style={{ color: n.unread ? "#FF9FB5" : "#7A2E40" }}>{n.time}</span>
                         </div>
                       </div>
                     ))}
@@ -423,22 +420,22 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <div className="relative">
               <div
                 className="flex items-center gap-2 px-3 py-1.5 rounded-lg cursor-pointer transition-colors hover:bg-white/5"
-                style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}
+                style={{ background: "rgba(255,92,138,0.1)", border: "1px solid rgba(255,159,181,0.22)" }}
                 onClick={() => setUserMenuOpen(!userMenuOpen)}
               >
                 <div className="tech-avatar" style={{ width: 26, height: 26, fontSize: 11 }}>
                   {initiales}
                 </div>
-                <span style={{ fontSize: 13, color: "#cbd5e1", fontWeight: 500 }}>{profile?.nombre?.split(' ')[0] ?? ''}</span>
-                <ChevronDown size={13} style={{ color: "#475569" }} />
+                <span style={{ fontSize: 13, color: "#FFE3EC", fontWeight: 600 }}>{profile?.nombre?.split(' ')[0] ?? ''}</span>
+                <ChevronDown size={13} style={{ color: "#FF9FB5" }} />
               </div>
 
               {userMenuOpen && (
-                <div className="absolute right-0 top-12 w-56 rounded-xl shadow-2xl z-50 overflow-hidden" style={{ background: "#1b1e24", border: "1px solid rgba(255,255,255,0.08)" }}>
-                  <div className="p-3 border-b" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
-                    <div className="text-sm font-semibold" style={{ color: "#f1f5f9" }}>{profile?.nombre}</div>
-                    <div className="text-xs mt-0.5" style={{ color: "#475569" }}>{profile?.correo}</div>
-                    <div className="mt-2 inline-flex px-2 py-0.5 rounded-full text-xs font-semibold" style={{ background: "rgba(62,207,142,0.15)", color: "var(--color-brand-400)" }}>
+                <div className="absolute right-0 top-12 w-56 rounded-xl shadow-2xl z-50 overflow-hidden" style={{ background: "#23101a", border: "1px solid rgba(255,159,181,0.24)" }}>
+                  <div className="p-3 border-b" style={{ borderColor: "rgba(255,159,181,0.14)" }}>
+                    <div className="text-sm font-semibold" style={{ color: "#FFE3EC" }}>{profile?.nombre}</div>
+                    <div className="text-xs mt-0.5" style={{ color: "#FF9FB5", opacity: 0.8 }}>{profile?.correo}</div>
+                    <div className="mt-2 inline-flex px-2 py-0.5 rounded-full text-xs font-semibold" style={{ background: "rgba(255,92,138,0.18)", color: "#FF9FB5", border: "1px solid rgba(255,92,138,0.35)" }}>
                       {rolLabel}
                     </div>
                   </div>
@@ -447,14 +444,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                       href="/dashboard/settings"
                       onClick={() => setUserMenuOpen(false)}
                       className="w-full text-left px-4 py-2 text-xs flex items-center gap-2 hover:bg-white/5 transition-colors"
-                      style={{ color: "#94a3b8", display: "flex" }}
+                      style={{ color: "#FFE3EC", display: "flex" }}
                     >
-                      <Settings size={14} />
+                      <Settings size={14} style={{ color: "#FF9FB5" }} />
                       Cambiar contraseña
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className="w-full text-left px-4 py-2 text-xs flex items-center gap-2 hover:bg-white/5 transition-colors text-red-400"
+                      className="w-full text-left px-4 py-2 text-xs flex items-center gap-2 hover:bg-white/5 transition-colors"
+                      style={{ color: "#FF5C8A" }}
                     >
                       <LogOut size={14} />
                       Cerrar Sesión

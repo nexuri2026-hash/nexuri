@@ -21,18 +21,18 @@ function StatWidget({ title, value, sub, icon: Icon, color, glow, trend }: {
   return (
     <div className="stat-card" style={{ boxShadow: glow }}>
       <div className="flex items-start justify-between mb-4">
-        <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: `${color}18` }}>
+        <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: `${color}22`, border: `1px solid ${color}40` }}>
           <Icon size={20} style={{ color }} />
         </div>
         {trend && (
-          <div className="flex items-center gap-1 text-xs font-semibold" style={{ color: trend === "up" ? "#10b981" : "#ef4444" }}>
+          <div className="flex items-center gap-1 text-xs font-semibold" style={{ color: trend === "up" ? "#FF5C8A" : "#C81D3A" }}>
             {trend === "up" ? <TrendingUp size={13} /> : <TrendingDown size={13} />}
           </div>
         )}
       </div>
-      <div className="text-3xl font-bold mb-1" style={{ color: "#f1f5f9" }}>{value}</div>
-      <div className="text-sm font-semibold mb-0.5" style={{ color: "#94a3b8" }}>{title}</div>
-      <div className="text-xs" style={{ color: "#475569" }}>{sub}</div>
+      <div className="text-3xl font-bold mb-1" style={{ color: "#FFE3EC" }}>{value}</div>
+      <div className="text-sm font-semibold mb-0.5" style={{ color: "#FF9FB5" }}>{title}</div>
+      <div className="text-xs" style={{ color: "rgba(255,159,181,0.65)" }}>{sub}</div>
     </div>
   );
 }
@@ -42,31 +42,31 @@ function MiniCard({ label, value, color, icon: Icon }: {
   label: string; value: number | string; color: string; icon: React.ElementType;
 }) {
   return (
-    <div className="flex items-center gap-3 p-3 rounded-xl" style={{ background: `${color}08`, border: `1px solid ${color}20` }}>
-      <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: `${color}15` }}>
+    <div className="flex items-center gap-3 p-3 rounded-xl" style={{ background: `${color}14`, border: `1px solid ${color}35` }}>
+      <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: `${color}26` }}>
         <Icon size={15} style={{ color }} />
       </div>
       <div>
         <div className="text-xl font-bold leading-none mb-0.5" style={{ color }}>{value}</div>
-        <div className="text-xs font-medium" style={{ color: "#64748b" }}>{label}</div>
+        <div className="text-xs font-medium" style={{ color: "#FFE3EC", opacity: 0.8 }}>{label}</div>
       </div>
     </div>
   );
 }
 
 const COMPANY_COLORS: Record<string, string> = {
-  "NCR":             "#009999",
-  "SANTANDER":       "#FF0101",
-  "IBM":             "#B2B2B2",
-  "FALABELLA":       "#008000",
-  "ITAU":            "#EC7000",  // mantiene color naranja original
-  "ITAÚ":            "#EC7000",
-  "BCI":             "#00FFFF",
-  "SIN ESPECIFICAR": "#DB25C1",
-  "SETRAC":          "#CCEB15",
+  "NCR":             "#FF5C8A",
+  "SANTANDER":       "#C81D3A",
+  "IBM":             "#FF9FB5",
+  "FALABELLA":       "#E03E6D",
+  "ITAU":            "#FF789E",
+  "ITAÚ":            "#FF789E",
+  "BCI":             "#FFE3EC",
+  "SIN ESPECIFICAR": "#7A2E40",
+  "SETRAC":          "#D4375C",
 };
 
-const FALLBACK_COLORS = ["#72b01d", "#3b82f6", "#f59e0b", "#8b5cf6", "#14b8a6", "#64748b"];
+const FALLBACK_COLORS = ["#FF5C8A", "#C81D3A", "#FF9FB5", "#FFE3EC", "#7A2E40", "#E03E6D"];
 
 function getCompanyColor(name: string, index: number): string {
   const key = name.trim().toUpperCase();
@@ -158,14 +158,14 @@ export default function DashboardPage() {
           <h2 className="section-title">Dashboard General</h2>
           <p className="section-subtitle">Métricas en tiempo real desde Supabase</p>
         </div>
-        <div className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold" style={{ background: "rgba(114,176,29,0.08)", border: "1px solid rgba(114,176,29,0.2)", color: "#72b01d" }}>
-          <Activity size={13} />
+        <div className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold" style={{ background: "rgba(255,92,138,0.14)", border: "1px solid rgba(255,92,138,0.35)", color: "#FF9FB5" }}>
+          <Activity size={13} style={{ color: "#FF5C8A" }} />
           Datos Actualizados
         </div>
       </div>
 
       {loading ? (
-        <div className="p-10 text-center text-slate-400">Cargando métricas...</div>
+        <div className="p-10 text-center" style={{ color: "#FF9FB5" }}>Cargando métricas...</div>
       ) : (
         <>
           {/* Top KPIs */}
@@ -175,32 +175,32 @@ export default function DashboardPage() {
               value={totalServicios} 
               sub={`${requierenInforme} requieren informe · ${noRequiere} N/A`} 
               icon={ClipboardList} 
-              color="#3b82f6" 
-              glow="0 0 20px rgba(59,130,246,0.08)" 
+              color="#FF5C8A" 
+              glow="0 0 24px rgba(255,92,138,0.12)" 
             />
             <StatWidget 
               title="Con Informe (SI)" 
               value={conInforme} 
               sub={`${((conInforme / (requierenInforme || 1)) * 100 || 0).toFixed(1)}% de los requeridos`} 
               icon={CheckCircle2} 
-              color="#72b01d" 
-              glow="0 0 20px rgba(114,176,29,0.08)" 
+              color="#FF9FB5" 
+              glow="0 0 24px rgba(255,159,181,0.12)" 
             />
             <StatWidget 
               title="Sin Informe (NO)" 
               value={sinInforme} 
               sub={`${((sinInforme / (requierenInforme || 1)) * 100 || 0).toFixed(1)}% de los requeridos`} 
               icon={XCircle} 
-              color="#ef4444" 
-              glow="0 0 20px rgba(239,68,68,0.1)" 
+              color="#C81D3A" 
+              glow="0 0 24px rgba(200,29,58,0.16)" 
             />
             <StatWidget 
               title="Bancos/Empresas" 
               value={bancoCounts.length} 
               sub="Entidades registradas" 
               icon={Building2} 
-              color="#f59e0b" 
-              glow="0 0 20px rgba(245,158,11,0.08)" 
+              color="#FFE3EC" 
+              glow="0 0 24px rgba(255,227,236,0.08)" 
             />
           </div>
 
@@ -209,29 +209,29 @@ export default function DashboardPage() {
             <div className="glass-card p-5 lg:col-span-2">
               <div className="flex items-center justify-between mb-5">
                 <div>
-                  <div className="font-semibold text-sm" style={{ color: "#f1f5f9" }}>Conteo por Banco / Empresa</div>
-                  <div className="text-xs" style={{ color: "#475569" }}>Cantidad de servicios asignados a cada entidad</div>
+                  <div className="font-semibold text-sm" style={{ color: "#FFE3EC" }}>Conteo por Banco / Empresa</div>
+                  <div className="text-xs" style={{ color: "#FF9FB5", opacity: 0.75 }}>Cantidad de servicios asignados a cada entidad</div>
                 </div>
               </div>
               <ResponsiveContainer width="100%" height={260}>
                 <BarChart data={bancoCounts} margin={{ top: 10, right: 10, left: -20, bottom: 40 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" vertical={false} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,159,181,0.08)" vertical={false} />
                   <XAxis 
                     dataKey="name" 
-                    tick={{ fill: "#94a3b8", fontSize: 10 }} 
+                    tick={{ fill: "#FF9FB5", fontSize: 10 }} 
                     axisLine={false} 
                     tickLine={false} 
                     angle={-45} 
                     textAnchor="end"
                   />
-                  <YAxis tick={{ fill: "#64748b", fontSize: 11 }} axisLine={false} tickLine={false} />
+                  <YAxis tick={{ fill: "#FF9FB5", fontSize: 11 }} axisLine={false} tickLine={false} />
                   <Tooltip 
-                    contentStyle={{ background: "rgba(255,255,255,0.95)", border: "none", borderRadius: 8, color: "#0f172a", fontSize: 12, boxShadow: "0 10px 25px rgba(0,0,0,0.5)" }}
-                    itemStyle={{ color: "#334155", fontWeight: 600 }}
-                    labelStyle={{ color: "#64748b", marginBottom: 4 }}
-                    cursor={{ fill: "rgba(255,255,255,0.05)" }}
+                    contentStyle={{ background: "rgba(33,15,24,0.96)", border: "1px solid rgba(255,159,181,0.3)", borderRadius: 10, color: "#FFE3EC", fontSize: 12, boxShadow: "0 10px 25px rgba(0,0,0,0.6)" }}
+                    itemStyle={{ color: "#FFE3EC", fontWeight: 600 }}
+                    labelStyle={{ color: "#FF9FB5", marginBottom: 4 }}
+                    cursor={{ fill: "rgba(255,92,138,0.08)" }}
                   />
-                  <Bar dataKey="value" name="Servicios" radius={[4, 4, 0, 0]}>
+                  <Bar dataKey="value" name="Servicios" radius={[6, 6, 0, 0]}>
                     {bancoCounts.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={getCompanyColor(entry.name, index)} />
                     ))}
@@ -243,8 +243,8 @@ export default function DashboardPage() {
             {/* Resumen Top Bancos */}
             <div className="glass-card p-5 flex flex-col">
               <div className="flex items-center justify-between mb-4">
-                <div className="font-semibold text-sm" style={{ color: "#f1f5f9" }}>Top Entidades</div>
-                <Link href="/dashboard/coordinacion" className="text-xs flex items-center gap-1" style={{ color: "#72b01d" }}>
+                <div className="font-semibold text-sm" style={{ color: "#FFE3EC" }}>Top Entidades</div>
+                <Link href="/dashboard/coordinacion" className="text-xs flex items-center gap-1" style={{ color: "#FF5C8A", fontWeight: 600 }}>
                   Ver detalle <ChevronRight size={12} />
                 </Link>
               </div>
@@ -283,80 +283,80 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {/* Gráfico de Línea de Tiempo (Mes/Año) */}
             <div className="glass-card p-5 lg:col-span-3">
               <div className="flex items-center justify-between mb-5">
                 <div>
-                  <div className="font-semibold text-sm" style={{ color: "#f1f5f9" }}>Historial por Mes y Año</div>
-                  <div className="text-xs" style={{ color: "#475569" }}>Volumen de coordinaciones distribuidas a lo largo del tiempo</div>
+                  <div className="font-semibold text-sm" style={{ color: "#FFE3EC" }}>Historial por Mes y Año</div>
+                  <div className="text-xs" style={{ color: "#FF9FB5", opacity: 0.75 }}>Volumen de coordinaciones distribuidas a lo largo del tiempo</div>
                 </div>
               </div>
               <ResponsiveContainer width="100%" height={220}>
                 <AreaChart data={timelineCounts} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                   <defs>
                     <linearGradient id="colorTime" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
+                      <stop offset="5%" stopColor="#FF5C8A" stopOpacity={0.42}/>
+                      <stop offset="95%" stopColor="#C81D3A" stopOpacity={0}/>
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" vertical={false} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,159,181,0.08)" vertical={false} />
                   <XAxis 
                     dataKey="name" 
-                    tick={{ fill: "#94a3b8", fontSize: 11 }} 
+                    tick={{ fill: "#FF9FB5", fontSize: 11 }} 
                     axisLine={false} 
                     tickLine={false} 
                   />
-                  <YAxis tick={{ fill: "#64748b", fontSize: 11 }} axisLine={false} tickLine={false} />
+                  <YAxis tick={{ fill: "#FF9FB5", fontSize: 11 }} axisLine={false} tickLine={false} />
                   <Tooltip 
-                    contentStyle={{ background: "rgba(255,255,255,0.95)", border: "none", borderRadius: 8, color: "#0f172a", fontSize: 12, boxShadow: "0 10px 25px rgba(0,0,0,0.5)" }}
-                    itemStyle={{ color: "#334155", fontWeight: 600 }}
-                    labelStyle={{ color: "#64748b", marginBottom: 4 }}
+                    contentStyle={{ background: "rgba(33,15,24,0.96)", border: "1px solid rgba(255,159,181,0.3)", borderRadius: 10, color: "#FFE3EC", fontSize: 12, boxShadow: "0 10px 25px rgba(0,0,0,0.6)" }}
+                    itemStyle={{ color: "#FFE3EC", fontWeight: 600 }}
+                    labelStyle={{ color: "#FF9FB5", marginBottom: 4 }}
                   />
-                  <Area type="monotone" dataKey="value" name="Coordinaciones" stroke="#3b82f6" strokeWidth={2} fillOpacity={1} fill="url(#colorTime)" />
+                  <Area type="monotone" dataKey="value" name="Coordinaciones" stroke="#FF5C8A" strokeWidth={2.5} fillOpacity={1} fill="url(#colorTime)" />
                 </AreaChart>
               </ResponsiveContainer>
             </div>
 
             {/* Info Adicional */}
             <div className="glass-card p-5">
-              <div className="font-semibold text-sm mb-4" style={{ color: "#f1f5f9" }}>Distribución de Informes</div>
+              <div className="font-semibold text-sm mb-4" style={{ color: "#FFE3EC" }}>Distribución de Informes</div>
               <div className="grid grid-cols-2 gap-3">
-                <MiniCard label="Con Informe" value={conInforme} color="#72b01d" icon={FileText} />
-                <MiniCard label="Sin Informe" value={sinInforme} color="#ef4444" icon={AlertTriangle} />
+                <MiniCard label="Con Informe" value={conInforme} color="#FF9FB5" icon={FileText} />
+                <MiniCard label="Sin Informe" value={sinInforme} color="#C81D3A" icon={AlertTriangle} />
               </div>
-              <div className="mt-4 pt-4 border-t border-white/5 text-xs text-slate-400">
+              <div className="mt-4 pt-4 border-t text-xs" style={{ borderColor: "rgba(255,159,181,0.14)", color: "#FF9FB5" }}>
                 Llevas un control del {(totalServicios > 0 ? (conInforme / totalServicios) * 100 : 0).toFixed(1)}% de los servicios con informes completados en sistema.
               </div>
             </div>
 
             {/* Accesos rápidos */}
             <div className="glass-card p-5">
-              <div className="font-semibold text-sm mb-4" style={{ color: "#f1f5f9" }}>Accesos Rápidos</div>
+              <div className="font-semibold text-sm mb-4" style={{ color: "#FFE3EC" }}>Accesos Rápidos</div>
               <div className="space-y-2">
-                <Link href="/dashboard/coordinacion" className="flex items-center justify-between p-3 rounded-xl hover:bg-white/5 transition-colors" style={{ border: "1px solid rgba(255,255,255,0.05)" }}>
+                <Link href="/dashboard/coordinacion" className="flex items-center justify-between p-3 rounded-xl hover:bg-white/5 transition-colors" style={{ border: "1px solid rgba(255,159,181,0.16)", background: "rgba(255,92,138,0.05)" }}>
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-blue-500/10 text-blue-400">
+                    <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ background: "rgba(200,29,58,0.25)", color: "#FF9FB5" }}>
                       <Calendar size={18} />
                     </div>
                     <div>
-                      <div className="text-sm font-semibold text-slate-200">Ver Coordinación</div>
-                      <div className="text-xs text-slate-500">Gestiona la programación diaria</div>
+                      <div className="text-sm font-semibold" style={{ color: "#FFE3EC" }}>Ver Coordinación</div>
+                      <div className="text-xs" style={{ color: "#FF9FB5", opacity: 0.75 }}>Gestiona la programación diaria</div>
                     </div>
                   </div>
-                  <ChevronRight size={16} className="text-slate-600" />
+                  <ChevronRight size={16} style={{ color: "#FF5C8A" }} />
                 </Link>
-                <Link href="/dashboard/technicians" className="flex items-center justify-between p-3 rounded-xl hover:bg-white/5 transition-colors" style={{ border: "1px solid rgba(255,255,255,0.05)" }}>
+                <Link href="/dashboard/cotizaciones" className="flex items-center justify-between p-3 rounded-xl hover:bg-white/5 transition-colors" style={{ border: "1px solid rgba(255,159,181,0.16)", background: "rgba(255,92,138,0.05)" }}>
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-emerald-500/10 text-emerald-400">
-                      <Users size={18} />
+                    <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ background: "rgba(255,92,138,0.22)", color: "#FFE3EC" }}>
+                      <FileText size={18} />
                     </div>
                     <div>
-                      <div className="text-sm font-semibold text-slate-200">Ver Técnicos</div>
-                      <div className="text-xs text-slate-500">Administrar personal en terreno</div>
+                      <div className="text-sm font-semibold" style={{ color: "#FFE3EC" }}>Ver Cotizaciones</div>
+                      <div className="text-xs" style={{ color: "#FF9FB5", opacity: 0.75 }}>Crear y descargar cotizaciones</div>
                     </div>
                   </div>
-                  <ChevronRight size={16} className="text-slate-600" />
+                  <ChevronRight size={16} style={{ color: "#FF5C8A" }} />
                 </Link>
               </div>
             </div>
